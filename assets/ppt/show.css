@@ -1,0 +1,516 @@
+/**
+  * ppt show's style
+  */
+.easy-sharing-box {
+  margin-top: 30px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 99999;
+}
+.easy-sharing-box .opacity-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 120%;
+  background-color: black;
+  opacity: 0.3;
+  z-index: -1;
+}
+.easy-sharing-box .box-detail {
+  position: relative;
+  width: 300px;
+  height: 100%;
+  margin: 0 auto;
+}
+.easy-sharing-box .box-item {
+  float: left;
+  position: relative;
+  width: 150px;
+  height: 100px;
+}
+.easy-sharing-box .box-item .box-item-i {
+  margin: 5px;
+  border-width: 2px;
+  border-style: solid;
+  height: 90%;
+}
+.easy-sharing-box .box-item .title {
+  font-size: 12px;
+  font-weight: bolder;
+}
+.easy-sharing-box .right-item {
+  margin-right: 0;
+}
+/*slide 特效*/
+.box-detail {
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+.box-detail .scroller {
+  -webkit-transition: 1s all ease;
+}
+.box-detail .scroll-nav li {
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 10px;
+  background-color: #aaa;
+}
+.box-detail .scroll-nav .active {
+  background-color: #666;
+}
+/**
+  * ppt playing
+  */
+.ppt-play-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+.ppt-play-box .box-item {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: 200;
+  background-color: gray;
+}
+.ppt-play-box .next-item {
+  -webkit-transform: translateX(-50%) scale(0.5);
+  opacity: 0.3;
+}
+.easy-sharing-box .box-detail {
+  width: auto;
+}
+@-webkit-keyframes shakeHide {
+  0%,
+  100% {
+    -webkit-transform: translateX(0) scale(1);
+  }
+  23% {
+    -webkit-transform: translateX(-50%) scale(0.6);
+    opacity: 0.3;
+  }
+  27% {
+    -webkit-transform: translateX(-50%) scale(0.5);
+    opacity: 0.3;
+  }
+  50% {
+    -webkit-transform: translateX(0) scale(0.3);
+    opacity: 0;
+  }
+  73% {
+    -webkit-transform: translateX(50%) scale(0.5);
+    opacity: 0.3;
+  }
+  77% {
+    -webkit-transform: translateX(50%) scale(0.6);
+    opacity: 0.3;
+  }
+}
+.shakeHide {
+  -webkit-animation-name: shakeHide;
+  -moz-animation-name: shakeHide;
+  -o-animation-name: shakeHide;
+  animation-name: shakeHide;
+}
+@-webkit-keyframes shakeShow {
+  
+}
+/**
+  * 选择新建ppt 还是 播放已存在ppt的入口
+  */
+.entrance {
+  margin: 30px auto;
+}
+.entrance .open-choose-tpl,
+.entrance .open-exist-ppt {
+  width: 80%;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 1px 1px 15px #999;
+  overflow: hidden;
+}
+.entrance .open-choose-tpl {
+  text-align: center;
+  padding: 0 0 30px 0;
+  background-repeat: no-repeat;
+}
+.entrance .open-choose-tpl .icon {
+  background: url(../images/add.png) no-repeat 0 0;
+  width: 60px;
+  height: 60px;
+  margin: 50px auto 25px;
+}
+.entrance .open-exist-ppt {
+  text-align: center;
+  margin-top: 75px;
+  padding: 0 0 30px 0;
+  background-repeat: no-repeat;
+}
+.entrance .open-exist-ppt .icon {
+  width: 60px;
+  height: 60px;
+  margin: 50px auto 25px;
+}
+@media screen and (min-width: 980px) {
+  .entrance .open-choose-tpl,
+  .entrance .open-exist-ppt {
+    float: left;
+    width: 440px;
+    height: 329px;
+    padding: 0;
+    margin-top: 0;
+  }
+  .entrance .open-exist-ppt {
+    float: right;
+    background-image: url('../images/show-existing.png');
+  }
+}
+/*
+  ppt style
+*/
+.type-simple {
+  color: #333;
+}
+.type-simple .box-item-i {
+  background-color: white;
+  border-color: #1a7eb0;
+}
+.type-simple .title {
+  margin: 35px 5px 0;
+}
+.type-simple .desc {
+  margin: 5px 18px 0;
+}
+.type-simple-2 {
+  color: #666;
+}
+.type-simple-2 .box-item-i {
+  background-color: #c6c6c6;
+}
+.type-simple-2 .title {
+  margin: 35px 5px 0;
+}
+.type-simple-2 .desc {
+  margin: 5px 15px;
+}
+.type-ashen {
+  color: white;
+  text-align: center;
+}
+.type-ashen .box-item-i {
+  background-color: #d4cfcb;
+}
+.type-ashen .title {
+  margin: 15px 0 0 0;
+}
+.type-ashen .desc {
+  margin: 5px 0 0 0;
+}
+.type-gray {
+  text-align: center;
+}
+.type-gray .box-item-i {
+  background-color: gray;
+}
+.type-gray .title {
+  color: white;
+  margin: 15px 0 0 0;
+}
+.type-gray .desc {
+  color: #333;
+  margin: 5px 0 0 0;
+}
+.type-blue {
+  color: white;
+}
+.type-blue .box-item-i {
+  background-color: #46aed5;
+}
+.type-blue .title {
+  margin: 5px 5px 0;
+}
+.type-blue .desc {
+  margin: 5px 5px 0;
+}
+.type-orange {
+  color: white;
+}
+.type-orange .box-item-i {
+  background-color: #f5542a;
+}
+.type-orange .title {
+  margin: 10px 0 0 5px;
+}
+.type-orange .desc {
+  margin: 5px 0px 0;
+}
+.editing-page,
+.showing-ppt li {
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#cccccc), to(#ffffff));
+  background: -moz-linear-gradient(top, #adadad, #ffffff);
+}
+/*
+  编辑ppt style
+*/
+.go-back,
+.setting,
+.preview-btn,
+.setting-detail s {
+  background-image: url(../images/edit-page.png);
+  background-repeat: no-repeat;
+}
+.top-ctl {
+  position: relative;
+  height: 30px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #181818;
+  border-bottom: 2px solid #1c80b1;
+}
+.top-ctl .mid-box {
+  width: 300px;
+  margin: 0 auto;
+  border-bottom: 1px solid #1a1a1a;
+}
+.top-ctl .go-back {
+  float: left;
+  width: 30px;
+  height: 28px;
+  background-position: 0 2px;
+  cursor: pointer;
+}
+.top-ctl .setting {
+  float: right;
+  width: 24px;
+  height: 26px;
+  background-position: -41px 2px;
+  cursor: pointer;
+}
+.top-ctl .setting-detail {
+  position: absolute;
+}
+.top-ctl .setting-detail s {
+  position: absolute;
+  width: 12px;
+  height: 6px;
+  right: 5px;
+  top: 28px;
+}
+.top-ctl .setting-detail li {
+  width: 100px;
+  height: 20px;
+}
+.edit-panel {
+  position: relative;
+  z-index: 99999;
+}
+.edit-panel .opacity-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #3b3b3b;
+  z-index: -1;
+}
+.edit-panel .edit-box {
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+}
+.edit-panel .edit-box .editing-page {
+  background-color: white;
+  overflow: hidden;
+  min-height: 220px;
+}
+.edit-panel .edit-box input[type=text],
+.edit-panel .edit-box textarea {
+  resize: none;
+  height: 16px;
+}
+.edit-panel .waiting-page-wrap {
+  width: 280px;
+  padding: 10px;
+  overflow-x: hidden;
+}
+.edit-panel .waiting-page-wrap li {
+  font-size: 8px;
+  -webkit-text-size-adjust: none;
+}
+.edit-panel .waiting-page {
+  *zoom: 1;
+  width: 999px;
+}
+.edit-panel .waiting-page:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.edit-panel .waiting-page li {
+  float: left;
+  width: 110px;
+  height: 83px;
+  background-color: white;
+  margin: 5px;
+}
+.edit-panel .waiting-page .add-btn {
+  text-align: center;
+  line-height: 82px;
+  background-color: #3b3b3b;
+  border: 1px dotted white;
+  color: white;
+  font-size: 60px;
+  cursor: pointer;
+}
+.edit-panel .preview-btn-wrap {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: -webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
+  background: -moz-linear-gradient(top, #64d0ed, #1b7fb1);
+  border-bottom: 1px solid #404040;
+  cursor: pointer;
+}
+.edit-panel .preview-btn-wrap .preview-btn {
+  position: relative;
+  top: 12px;
+  width: 27px;
+  height: 34px;
+  margin: 0 auto;
+  background-position: 0 -32px;
+}
+.edit-panel .other-ctl {
+  display: none;
+}
+@media screen and (min-width: 980px) {
+  .top-ctl {
+    display: none;
+  }
+  .edit-panel .other-ctl {
+    position: absolute;
+    right: 0px;
+    top: 0;
+    display: block;
+  }
+  .edit-panel .other-ctl a {
+    display: block;
+    width: 60px;
+    height: 60px;
+    background-image: url(../images/icon.png);
+    background-repeat: no-repeat;
+    text-indent: -99999px;
+    margin-bottom: 20px;
+  }
+  .edit-panel .other-ctl a:hover {
+    opacity: 0.5;
+  }
+  .edit-panel .other-ctl .save {
+    background-position: 0 0;
+  }
+  .edit-panel .other-ctl .link {
+    background-position: 0 -60px;
+  }
+  .edit-panel .other-ctl .play {
+    background-position: 0 -120px;
+  }
+  .edit-panel .other-ctl .tdc {
+    background-position: 0 -180px;
+  }
+  .edit-panel .opacity-bg {
+    display: none;
+  }
+  .edit-panel .edit-box {
+    position: relative;
+    width: auto;
+  }
+  .edit-panel .edit-box .editing-page {
+    margin-left: 160px;
+    margin-right: 80px;
+    min-height: 405px;
+  }
+  .edit-panel .edit-box .waiting-page-wrap {
+    background-color: #3b3b3b;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 120px;
+    min-height: 385px;
+  }
+  .edit-panel .edit-box .waiting-page-wrap .waiting-page {
+    width: auto;
+    font-size: 8px;
+  }
+  .edit-panel .edit-box .waiting-page-wrap li {
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .edit-panel .edit-box input[type=text] {
+    height: 40px;
+    font-size: 20px;
+    padding: 0 5px;
+  }
+  .edit-panel .preview-btn-wrap {
+    display: none;
+  }
+}
+@media screen and (max-width: 980px) {
+  .top-ctl {
+    display: block;
+  }
+  .crumbs {
+    display: none;
+  }
+}
+/*
+  ppt playing
+*/
+.showing-ppt {
+  position: relative;
+  width: 320px;
+  height: 300px;
+  margin: 0 auto;
+}
+.showing-ppt ul {
+  *zoom: 1;
+}
+.showing-ppt ul:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+.showing-ppt li {
+  position: absolute;
+  width: 100%;
+  height: 300px;
+  -webkit-transition: 2s all ease;
+  z-index: 1;
+  opacity: 0;
+}
+@media screen and (min-width: 980px) {
+  .showing-ppt {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    background-color: white;
+  }
+  .showing-ppt li {
+    width: 100%;
+    height: 100%;
+  }
+}

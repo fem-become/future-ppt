@@ -1,0 +1,208 @@
+/*
+  编辑ppt style
+*/
+.go-back, .setting, .preview-btn, .setting-detail s{
+  background-image: url(../../images/edit-page.png);
+  background-repeat: no-repeat;
+}
+
+.top-ctl{
+  position: relative;
+  height: 30px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #181818;
+  border-bottom: 2px solid #1c80b1;
+  .mid-box{
+    width: 300px;
+    margin: 0 auto;
+    border-bottom: 1px solid #1a1a1a;
+  }
+  .go-back{
+    float: left;
+    width: 30px;
+    height: 28px;
+    background-position: 0 2px;
+    cursor: pointer;
+  }
+  .setting{
+    float: right;
+    width: 24px;
+    height: 26px;
+    background-position: -41px 2px;
+    cursor: pointer;
+  }
+  .setting-detail{
+    position: absolute;
+    s{
+      position: absolute;
+      width: 12px;
+      height: 6px;
+      right: 5px;
+      top: 28px;
+    }
+    li{
+      width: 100px;
+      height: 20px;
+    }
+  }
+}
+.edit-panel{
+  position: relative;
+  z-index: 99999;
+  .opacity-bg{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #3b3b3b;
+    z-index: -1;
+  }
+  .edit-box{
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+    .editing-page{
+      background-color: white;
+      overflow: hidden;
+      min-height: 220px;
+    }
+    input[type=text], textarea{
+      resize: none;
+      height: 16px;
+    }
+  }
+  .waiting-page-wrap{
+    width: 280px;
+    padding: 10px;
+    overflow-x: hidden;
+    li{
+      font-size: 8px;
+      -webkit-text-size-adjust:none;
+    }
+  }
+  .waiting-page{
+    .clearfix();
+    width: 999px;
+    li{
+      float: left;
+      width: 110px;
+      height: 83px;
+      background-color: white;
+      margin: 5px;
+    }
+    .add-btn{
+      text-align: center;
+      line-height: 82px;
+      background-color: #3b3b3b;
+      border: 1px dotted white;
+      color: white;
+      font-size: 60px;
+      cursor: pointer;
+    }
+  }
+  .preview-btn-wrap{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
+    background:-moz-linear-gradient(top, #64d0ed, #1b7fb1);
+    border-bottom: 1px solid #404040;
+    cursor: pointer;
+    .preview-btn{
+      position: relative;
+      top: 12px;
+      width: 27px;
+      height: 34px;
+      margin: 0 auto;
+      background-position: 0 -32px;
+    }
+  }
+  .other-ctl{
+    display: none;
+  }
+}
+@media screen and (min-width: 980px) {
+  .top-ctl{
+    display: none;
+  }
+  .edit-panel{
+    .other-ctl{
+      position: absolute;
+      right: 0px;
+      top: 0;
+      display: block;
+      a{
+        display: block;
+        width: 60px;
+        height: 60px;
+        background-image: url(../../images/icon.png);
+        background-repeat: no-repeat;
+        text-indent: -99999px;
+        margin-bottom: 20px;
+        &:hover{
+          opacity: 0.5;
+        }
+      }
+      .save{
+        background-position: 0 0;
+      }
+      .link{
+        background-position: 0 -60px;
+      }
+      .play{
+        background-position: 0 -120px;
+      }
+      .tdc{
+        background-position: 0 -180px;
+      }
+    }
+    .opacity-bg{
+      display: none;
+    }
+    .edit-box{
+      position: relative;
+      width: auto;
+      .editing-page{
+        margin-left: 160px;
+        margin-right: 80px;
+        min-height: 405px;
+      }
+      .waiting-page-wrap{
+        background-color: #3b3b3b;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 120px;
+        min-height: 385px;
+        .waiting-page{
+          width: auto;
+          font-size: 8px;
+        }
+        li{
+          margin-bottom: 10px;
+          cursor: pointer;
+        }
+      }
+      input[type=text]{
+        height: 40px;
+        font-size: 20px;
+        padding: 0 5px;
+      }
+    }
+    .preview-btn-wrap{
+      display: none;
+    }
+  }
+}
+@media screen and (max-width: 980px) {
+  .top-ctl{
+    display: block;
+  }
+  .crumbs{
+    display: none;
+  }
+}

@@ -1,0 +1,6 @@
+*.iml
+*.ipr
+*.pid
+*.log
+node_modules/
+.idea/

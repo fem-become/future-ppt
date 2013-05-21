@@ -1,0 +1,56 @@
+/**
+  * 选择新建ppt 还是 播放已存在ppt的入口
+  */
+// @media screen and (min-width: 980px) {
+  
+.entrance{
+  // width: 300px;
+  margin: 30px auto;
+  .open-choose-tpl, .open-exist-ppt{
+    width: 80%;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 1px 1px 15px #999;
+    overflow: hidden;
+  }
+  .open-choose-tpl{
+    text-align: center;
+    padding: 0 0 30px 0;
+    // background-image: url(../../images/add-2.png);
+    background-repeat: no-repeat;
+    .icon{
+      background: url(../../images/add.png) no-repeat 0 0;
+      width: 60px;
+      height: 60px;
+      margin: 50px auto 25px;
+    }
+  }
+  .open-exist-ppt{
+    text-align: center;
+    margin-top: 75px;
+    padding: 0 0 30px 0;
+    background-repeat: no-repeat;
+    .icon{
+      width: 60px;
+      height: 60px;
+      margin: 50px auto 25px;
+    }
+  }
+}
+
+// }
+@media screen and (min-width: 980px) {
+  .entrance{
+    .open-choose-tpl, .open-exist-ppt{
+      float: left;
+      width: 440px;
+      height: 329px;
+      padding: 0;
+      margin-top: 0;
+    }
+    .open-exist-ppt{
+      float: right;
+      background-image: url('../../images/show-existing.png');
+    }
+  }
+}

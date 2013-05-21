@@ -1,0 +1,46 @@
+<section class="content main">
+    <div class="ppts">
+        <a href="add_ppt.html" class="ppt-image first">
+            <img src="./assets/images/add-ppt.png">
+        </a>
+        <a href="control.html" class="ppt-image">
+            <img src="./assets/images/show-ppt.png">
+        </a>
+    </div>
+
+    <p class="main-tips">—————— 快速创建与分享PPT模板，开始你的演说吧！ ——————</p>
+
+    <div id="J_QRWrapper" class="qr-code">
+        <img id="J_QRCodeImg" src="" width="150" height="150"/>
+        <p>PIN码：<em id="J_PinCode"></em></p>
+    </div>
+</section>
+
+<script>
+    var isMobile = '<%= isMobile %>';
+
+    KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
+
+        MS.startup(function (data) {
+            NS.toggleNav('logo');
+            var qrImgEl = D.get('#J_QRCodeImg');
+//            var key = S.now() + '' + S.guid();
+//            var key = 1;
+            var url = location.href + '&key=' + window.key + '&mobile=true';
+            qrImgEl.src = 'http://qr.liantu.com/api.php?text=' + encodeURIComponent(url);
+            D.html('#J_PinCode', key);
+        });
+
+        MS.teardown(function () {
+            // 注册 teardown
+        });
+
+        MS.includeOnce(function () {
+            // 注册 includeOnce
+        });
+
+//        MS.destory(function () {
+//            注册destory
+//        });
+    });
+</script>

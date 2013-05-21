@@ -1,0 +1,109 @@
+<section class="content ppt">
+    <div class="easy-sharing-box" id="J_EasySharingBox">
+        <div class="box-detail" id="J_BoxDetail">
+            <div class="scroller J_Scroller">
+                <div class="slide-panel">
+                    <div class="J_Tpl box-item type-simple" data-c="0">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-ashen" data-c="1">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-gray" data-c="2">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-blue" data-c="3">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-orange" data-c="4">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-simple-2" data-c="5">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-panel">
+                    <div class="J_Tpl box-item type-simple" data-c="0">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯2</div>
+                            <div class="desc">双击编辑此幻灯2</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-ashen" data-c="1">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯2</div>
+                            <div class="desc">双击编辑此幻灯2</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-gray" data-c="2">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯2</div>
+                            <div class="desc">双击编辑此幻灯2</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-blue" data-c="3">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯2</div>
+                            <div class="desc">双击编辑此幻灯2</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-orange" data-c="4">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                    <div class="J_Tpl box-item type-simple-2" data-c="5">
+                        <div class="box-item-i">
+                            <div class="title">双击编辑此幻灯</div>
+                            <div class="desc">双击编辑此幻灯</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="scroll-nav J_ScrollNav">
+                <li class="active"></li>
+                <li></li>
+            </ul>
+        </div>
+    </div>
+</section>
+<script>
+    KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
+
+        MS.startup(function (data) {
+            var app = this;
+            NS.toggleNav('back');
+            E.delegate('#J_EasySharingBox', 'click', '.J_Tpl', function(){
+                app.forward('edit_ppt.html');
+            });
+        });
+
+        MS.teardown(function () {
+            // 注册 teardown
+        });
+
+        MS.includeOnce(function () {
+            // 注册 includeOnce
+        });
+
+    });
+</script>

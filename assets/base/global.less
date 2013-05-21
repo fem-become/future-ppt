@@ -1,0 +1,40 @@
+@import '../mixins.less';
+
+@import 'reset.less';
+
+body{
+  font-size: 12px;
+  font-family: arial;
+}
+
+.header{
+  position: relative;
+  margin: 0 auto;
+  .logo{
+  }
+  .login{
+    position: absolute;
+    right: 0;
+    top: 0px;
+  }
+}
+.crumbs{
+  margin: 0 auto;
+}
+.content{
+  position: relative;
+  margin: 0 auto;
+  .clearfix();
+}
+@media screen and (max-width: 980px) {
+  
+  .header, .content, .crumbs{
+    width: 300px;
+  }
+}
+// pc
+@media screen and (min-width: 980px) {
+  .header, .content, .crumbs{
+    width: 950px;
+  }
+}

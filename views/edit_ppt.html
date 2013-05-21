@@ -1,0 +1,226 @@
+<section>
+    <div class="edit-panel">
+        <div class="opacity-bg"></div>
+        <div class="top-ctl">
+            <div class="mid-box">
+
+                <div class="go-back" id="J_GoBack"></div>
+                <div class="setting" id="J_Setting"></div>
+                <div class="setting-detail" id="J_SettingDetail" style="display: none;">
+                    <ul>
+                        <li>保存</li>
+                        <li>分享</li>
+                        <li>删除</li>
+                    </ul>
+                    <s></s>
+                </div>
+            </div>
+        </div>
+        <div class="edit-box">
+            <div class="editing-page" id="J_EditingPage">
+                <!-- <div class="title">
+                  <span>单击此处添加标题</span>
+                  <input style="display:none;" type="text" />
+                </div>
+                <div class="desc">
+                  <span></span>
+                  <input style="display: none;" type="text" />
+                </div> -->
+            </div>
+            <div class="waiting-page-wrap">
+                <div class="waiting-page">
+                    <ul id="J_MinShow">
+                        <!-- <li class="add-btn" id="J_AddBtn">
+                          +
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="preview-btn-wrap" id="J_PreviewBtn">
+            <div class="preview-btn"></div>
+        </div>
+        <div class="other-ctl">
+            <a href="#" class="save J_Save">保存</a>
+            <a href="#" class="link J_Link">链接</a>
+            <a href="control.html" class="play" id="J_Play">播放</a>
+            <a href="#" class="tdc" id="J_Tdc">二维码</a>
+        </div>
+    </div>
+
+    <div class="showing-ppt" id="J_ShowingPPT">
+        <ul id="J_PPPTBox">
+        </ul>
+    </div>
+</section>
+
+        <script>
+            KISSY.use('mobile/app/1.0/,dom,event,node,template', function (S, MS, D, E, Node, TT) {
+
+                MS.startup(function (data) {
+                    var app = this;
+                    NS.toggleNav('back');
+
+                    var $ = S.all;
+
+                    var currentEditingIdx = 0;
+                    if( window.location.search ){
+
+                    }
+
+                    var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
+                      <input class="J_TitleEdit" type="text" value="{{data.title.text}}" \
+                      placeholder="单击此处添加标题"/>\
+                    </div>\
+                    <div class="desc" style="margin: {{data.desc.margin}}">\
+                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="单击此处添加副标题"/>\
+                    </div>';
+                    var minShowTpl = '<li data-c="{{data.index}}">\
+                      <div class="title" style="margin: {{data.title.margin}}">\
+                      {{#if data.title.text}}\
+                      {{data.title.text}}\
+                      {{#else}}\
+                      单击此处添加标题\
+                      {{/if}}\
+                      </div>\
+                      <div class="desc" style="margin: {{data.desc.margin}}">\
+                      {{#if data.desc.text}}\
+                      {{data.desc.text}}</div>\
+                      {{#else}}\
+                      单击此处添加副标题\
+                      {{/if}}\
+                    </li>';
+                    var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
+                  <span>{{data.title.text}}</span>\
+                </div>\
+                <div class="desc" style="margin: {{data.desc.offset}}">\
+                  <span>{{data.desc.text}}</span>\
+                </div>';
+
+                    var editingPage = $('#J_EditingPage');
+
+                    showEditingItemByIdx(currentEditingIdx);
+
+                    var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
+
+                    $('#J_GoBack').on(clickEventName, function(){
+                        window.history.go(-1);
+                    })
+
+                    $('#J_Setting').on(clickEventName, function(){
+
+                    })
+
+                    $('#J_AddBtn').on(clickEventName, function(){
+                        window.pptData[currentEditingIdx].title.text = editingPage.one('.J_TitleEdit').val();
+                        window.pptData[currentEditingIdx].desc.text = editingPage.one('.J_DescEdit').val();
+                        currentEditingIdx(currentEditingIdx);
+                    })
+
+                    $('#J_PreviewBtn').on(clickEventName, function(){
+                        app.forward('control.html');
+                        saveEditingItem(currentEditingIdx)
+                    });
+
+                    $('#J_MinShow').delegate(clickEventName, 'li', function(e){
+                        var target = $(e.currentTarget);
+                        var idx = target.attr('data-c');
+                        saveEditingItem(currentEditingIdx);
+                        if( idx != undefined ){
+                            currentEditingIdx = parseInt(idx);
+                            showEditingItemByIdx(currentEditingIdx);
+                        }
+                    })
+
+                    $('#J_Play').on(clickEventName, function(e){
+                        e.halt();
+                        saveEditingItem(currentEditingIdx);
+                        $('#J_ShowingPPT').show();
+                        $('#J_PPPTBox').html('');
+                        S.each(window.pptData, function(item, idx){
+                            $('#J_PPPTBox').append( $( TT(minShowTpl).render({
+                                data: item
+                            }) ) )
+                        })
+                        $('#J_PPPTBox').children().item(0).css('opacity', 1);
+                    })
+
+
+                    function pptPlaying(){
+
+                    }
+
+                    //init render minShow
+                    renderMinShow();
+
+                    function renderMinShow(){
+                        var minShow = $('#J_MinShow');
+                        minShow.html('<li class="add-btn" id="J_AddBtn">+</li>');
+
+                        S.each(window.pptData, function(item, idx){
+
+                            $( TT(minShowTpl).render({
+                                data: S.merge(item, {index: idx})
+                            }) ).insertBefore($('#J_AddBtn'));
+                        })
+                    }
+
+                    function showEditingItemByIdx(idx){
+                        editingPage.html(TT(editingTpl).render({
+                            data: window.pptData[idx]
+                        }));
+                    }
+
+                    function saveEditingItem(idx){
+                        var box = $('#J_EditingPage');
+                        window.pptData[idx].title.text = box.one('.J_TitleEdit').val()
+                        window.pptData[idx].desc.text = box.one('.J_DescEdit').val();
+
+                        renderMinShow();
+                    }
+
+                });
+
+                MS.teardown(function () {
+                    // 注册 teardown
+                });
+
+                MS.includeOnce(function () {
+                    // 注册 includeOnce
+                });
+
+            });
+
+            window.pptData = [
+                {
+                    title: {
+                        margin: '10px',
+                        text: ''
+                    }
+                    ,desc: {
+                    margin: '10px',
+                    text: ''
+                }
+                }
+                ,{
+                    title: {
+                        margin: '30px 20px 0',
+                        text: ''
+                    }
+                    ,desc: {
+                        margin: '10px',
+                        text: ''
+                    }
+                }
+                ,{
+                    title: {
+                        margin: '50px 10px 0',
+                        text: ''
+                    }
+                    ,desc: {
+                        margin: '10px',
+                        text: ''
+                    }
+                }
+            ];
+        </script>

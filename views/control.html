@@ -1,0 +1,166 @@
+<section class="content control">
+
+<div>Client: <em id="J_ClientStatus"></em></div>
+<div id="J_Debug"></div>
+<% if(1 || isMobile){ %>
+    <div id="control">
+        <div id="J_Prev" class="prev_btn"></div>
+        <div id="J_Pointer" class="pointer"></div>
+        <div id="J_Next" class="next_btn"></div>
+    </div>
+<% }else{ %>
+<div id="J_ScreenPointer" style="display:none; background: #f00; width: 20px; height: 20px; border-radius: 10px;"></div>
+<% } %>
+</section>
+
+        <script>
+
+            KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
+
+                MS.startup(function (data) {
+                    var app = this;
+                    NS.toggleNav('logo');
+
+                    if(mobile == 'true'){
+                        window.socket.emit("send", {
+                            key: window.key,
+                            act: "pair",
+                            page: app.get('viewpath')
+                        });
+
+
+                        var start = false,
+                            curPos = null,
+                            startPos = null;
+
+                        window.addEventListener('deviceorientation', orientationListener, false); //方向感应器
+                        window.addEventListener('MozOrientation', orientationListener, false); //方向感应器 for firefox
+
+                        function orientationListener(ev) {
+                            var gamma = ev.gamma;
+                            var beta = ev.beta;
+                            var alpha = ev.alpha;
+
+                            if(ev.accelerationIncludingGravity){
+                                gamma = ev.accelerationIncludingGravity.x*10;
+                                beta = -ev.accelerationIncludingGravity.y*10;
+                                alpha = ev.accelerationIncludingGravity.z*10;
+                            }
+
+                            curPos = {
+                                y: alpha, // dir
+                                x: beta, // fb
+                                z: gamma // lr
+                            };
+
+                            start && (!startPos || (startPos.z != curPos.z || startPos.x != curPos.x)) && window.socket.emit("send", {
+                                key: key,
+                                act: 'move',
+                                data: {
+                                    curPos: curPos,
+                                    startPos: startPos
+                                }
+                            });
+                        }
+
+                    }else{}
+
+                });
+
+                MS.teardown(function () {
+                    // 注册 teardown
+                });
+
+                MS.includeOnce(function () {
+                    // 注册 includeOnce
+                });
+
+            });
+
+        </script>
+
+<script>
+    var isMobile = '<%= isMobile %>';
+
+    KISSY.ready(function (S) {
+        return;
+        var D = S.DOM;
+        var E = S.Event;
+
+        window.AppDebug = function (msg, clear) {
+            clear = !(typeof clear === 'undefined');
+            var debugEl = D.get('#J_Debug');
+            D.html(debugEl, clear === true ? msg : D.html(debugEl) + '<br />' + msg);
+        };
+
+        var linkEl = D.get('#J_Url');
+        D.attr(linkEl, 'href', url);
+        D.html(linkEl, url);
+
+        var clientStatus = D.get('#J_ClientStatus');
+        D.html(clientStatus, isMobile);
+
+        AppDebug('key is ' + key);
+        AppDebug('isMobileClient: ' + isMobile);
+
+        if (mobile == 'false') {
+
+        } else {
+
+
+
+            window.socket.on('mobile_get_response', function (data) {
+                switch (data.act) {
+                    case 'pair_client':
+                        AppDebug('response got. ' + data.key);
+                        key = data.key;
+                        AppDebug('real Key is <%= key %>');
+
+                        D.hide('#J_QRCodeImg');
+                        AppDebug('Device paired.');
+
+                        $('#J_Pointer')
+                                .on('touchstart', function (e) {
+                                    AppDebug('Tap hold event triggered');
+                                    window.socket.emit('send', {
+                                        key: data.key,
+                                        act: 'pointer',
+                                        data: {
+                                            x: -1,
+                                            y: -1
+                                        }
+                                    });
+                                    window.socket.emit('send', {
+                                        key: data.key,
+                                        act: 'reset',
+                                        data: curPos
+                                    });
+                                    startPos = curPos;
+                                    start = true;
+                                })
+                                .on('touchend', function(e){
+                                    AppDebug('Tap hold event ended.');
+                                    start = false;
+                                    window.socket.emit('send', {
+                                        key: data.key,
+                                        act: 'pointer_stop',
+                                        data: {}
+                                    });
+
+                                });
+
+                        break;
+                    case 'next':
+                        break;
+                    case 'prev':
+                        break;
+                }
+            });
+            window.socket.emit("send", {
+                key: "<%= key %>",
+                act: "pair"
+            });
+
+        }
+    });
+</script>

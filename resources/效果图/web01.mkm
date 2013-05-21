@@ -1,0 +1,11 @@
+<MKM version="2.0" imageFileUrl="file:///F:/Website/htdocs/easysharing-server/resources/%e6%95%88%e6%9e%9c%e5%9b%be/web01.jpg">
+  <Marks>
+    <LengthMark direction="3" color="16711680" length="75" x="1205" y="630"/>
+    <LengthMark direction="12" color="16711680" length="440" x="330" y="291"/>
+    <LengthMark direction="12" color="16711680" length="440" x="830" y="269"/>
+    <LengthMark direction="12" color="16711680" length="58" x="770" y="354"/>
+    <LengthMark direction="3" color="16711680" length="94" x="697" y="502"/>
+    <ColorMark defaultDirection="9" colorSystem="hex" direction="9" color="16711680" targetColor="6710886" offsetX="25" offsetY="10" x="1000" y="537"/>
+    <LengthMark direction="3" color="16711680" length="21" x="746" y="535"/>
+  </Marks>
+</MKM>
