@@ -15,6 +15,8 @@ var mobileDetect = require('./libs/mobile-detect');
 
 server.listen(7920);
 
+app.enable('trust proxy');
+
 app.engine('html', cons.ejs);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
