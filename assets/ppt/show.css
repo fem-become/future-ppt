@@ -532,3 +532,100 @@
   -webkit-transform: rotateY(0deg);
   -webkit-transform-origin: top right;
 }
+/*** View Stage ***/
+#viewStage {
+  -webkit-perspective: 450px;
+  -webkit-perspective-origin: 50% 50%;
+}
+/*** Keyframes ***/
+/*** Cube ***/
+.cube {
+  position: relative;
+  float: left;
+  width: 950px;
+  height: 300px;
+  -webkit-transition-duration: 1s;
+  /* Transform */
+
+  -webkit-transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 50%;
+  /* Animation */
+
+  -webkit-animation-name: rotation;
+  -webkit-animation-timing-function: ease;
+  -webkit-animation-timing-function: cubic-bezier(0.6, -1, 0.4, 1.5);
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 15s;
+  -moz-animation-name: rotation;
+  -moz-animation-timing-function: ease;
+  -moz-animation-iteration-count: infinite;
+  -moz-animation-duration: 15s;
+}
+/* Cube delay and z-index fix */
+#cube1 {
+  z-index: 1;
+  -webkit-animation-delay: 1s;
+  -moz-animation-delay: 1s;
+}
+/*** Cube's face Style ***/
+.cube div {
+  background-color: #ccc;
+  background-size: 450px 300px;
+  position: absolute;
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+}
+.cube div.fb {
+  width: 950px;
+  height: 300px;
+}
+.cube div.tb {
+  width: 950px;
+  height: 300px;
+}
+.cube div.lr {
+  width: 600px;
+  height: 300px;
+}
+/* Face image and position */
+.facefront {
+  background-image: url(../image.jpg);
+  -webkit-transform: translateZ(150px);
+  -moz-transform: translateY(0px);
+}
+.faceback {
+  background-image: url(../image3.jpg);
+  -webkit-transform: rotateY(180deg) rotateZ(180deg) translateZ(150px);
+  -moz-transform: translateY(300px);
+}
+.facetop {
+  background-image: url(../image2.jpg);
+  -webkit-transform: rotateX(90deg) translateZ(150px);
+  -moz-transform: translateY(600px);
+}
+.facebottom {
+  background-image: url(../image4.jpg);
+  -webkit-transform: rotateX(-90deg) translateZ(150px);
+  -moz-transform: translateY(900px);
+}
+.faceleft {
+  background-color: #000;
+  -webkit-transform: rotateY(90deg) translateZ(0px);
+  -moz-transform: scaleX(0);
+}
+.faceright {
+  background-color: #000;
+  -webkit-transform: rotateY(-90deg) translateZ(150px);
+  -moz-transform: scaleX(0);
+}
+#cube1 div {
+  background-position: 0 0;
+}
+#cube2 div {
+  background-position: -150px 0;
+}
+#cube3 div {
+  background-position: -300px 0;
+}

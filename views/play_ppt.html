@@ -1,6 +1,16 @@
 <section class="content control">
   <div class="showing-ppt style-rotate" id="J_ShowingPPT">
-  <ul id="J_PPPTBox">
+
+  <div id="viewStage">
+  <div id="cube1" class="cube" ><!-- 1526 -->
+    <div class="facefront fb">1</div>
+    <div class="faceback fb">2</div>
+    <div class="facetop tb">5</div>
+    <div class="facebottom tb">6</div>
+  </div>
+</div>
+
+  <ul id="J_PPPTBox" style="display: none;">
   </ul>
 </div>
 </section>
@@ -75,6 +85,15 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
           target.css('-webkit-transform', '');
         }
       })
+
+      $('#J_PPPTBox').on('swipe', function(e){
+        if( e.direction == 'left'){
+          _next();
+        }
+        else if(e.direction == 'right'){
+          _prev();
+        }
+      })
     }
 
     //渲染ppt
@@ -98,22 +117,48 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
     function _prev(){
       if( cIdx == 0) return false;
       var items = $('#J_PPPTBox').children();
+      --cIdx;
       switch(playStyle){
         case 'rotate':{
-          rotateTo(cIdx,cLen,'prev');
+          // rotateTo(cIdx,cLen,'prev');
+          rotate2(cIdx, 'prev');
         }
       }
-      --cIdx;
     }
     function _next(){
       if( cIdx == cLen-1) return false;
       var items = $('#J_PPPTBox').children();
+      ++cIdx;
       switch(playStyle){
         case 'rotate':{
-          rotateTo(cIdx,cLen,'next');
+          // rotateTo(cIdx,cLen,'next');
+          rotate2(cIdx, 'next');
         }
       }
-      ++cIdx;
+    }
+
+    function rotate2(cIdx, type){
+      // debugger
+      renderPPTToCube(cIdx);
+      // if( type == 'prev'){
+        $('#cube1').css('-webkit-transform', 'rotateX(' + 90 * cIdx + 'deg)')
+      // }
+      // else {
+
+      // }
+    }
+    renderPPTToCube(0);
+    function renderPPTToCube(cIdx){
+      KISSY.use('template', function(S, TT){
+        var items = $('#cube1').children();
+        items = [items.item(0), items.item(3), items.item(1), items.item(2)];
+
+        // items
+        items[cIdx%4].html( TT(minShowTpl).render({
+          data: g_pptdata[cIdx]
+          ,index: cIdx
+        }) )
+      });
     }
 
     //特殊效果：旋转
