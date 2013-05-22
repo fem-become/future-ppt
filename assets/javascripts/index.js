@@ -60,11 +60,22 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
     var curPage = app.get('viewpath');
 
-//    if(curPage){
-//        if(!/&key=(\d+)/.test(location.hash)){
-//            location.hash = location.hash + '&key=' + window.key;
-//        }
-//    }
+    var navEl = D.get('#MS-nav');
+    var msContentEl = D.get('#J_MSContent');
+    var msContentDivEl = D.children(msContentEl, 'div');
+    var timer;
+    function resize(){
+        timer && clearTimeout(timer);
+        timer = setTimeout(function(){
+            var height = D.viewportHeight() - D.height(navEl);
+            D.css(msContentEl, 'height', height);
+            D.css(msContentDivEl, 'height', height);
+        }, 100);
+    }
+
+    resize();
+
+    E.on(window, 'resize', resize);
 
     if(mobile == 'true'){
         S.log('this is mobile client.');

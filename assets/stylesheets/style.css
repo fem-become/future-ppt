@@ -107,6 +107,9 @@ body {
     width: 100%;
     position: relative;
 }
+.MS-con .main {
+    width: 100%;
+}
 
 .main .ppts {
     overflow: hidden;
