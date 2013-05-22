@@ -1,6 +1,5 @@
 <section class="content control">
 
-<div>Client: <em id="J_ClientStatus"></em></div>
     <div id="control" style="display: none">
         <div id="J_Prev" class="prev_btn"></div>
         <div id="J_Pointer" class="pointer"></div>
@@ -96,6 +95,52 @@
                             });
                         }
 
+                        var pointerEl = D.get('#J_Pointer');
+                        E.on(pointerEl, 'touchstart', function (e) {
+                            window.socket.emit('send', {
+                                key: window.key,
+                                act: 'pointer',
+                                data: {
+                                    x: -1,
+                                    y: -1
+                                }
+                            });
+                            window.socket.emit('send', {
+                                key: window.key,
+                                act: 'reset',
+                                data: curPos
+                            });
+                            startPos = curPos;
+                            start = true;
+                        });
+                        E.on(pointerEl, 'touchend', function(e){
+                            start = false;
+                            window.socket.emit('send', {
+                                key: window.key,
+                                act: 'pointer_stop',
+                                data: {}
+                            });
+
+                        });
+
+                        var prevBtn = D.get('#J_Prev');
+                        E.on(prevBtn, 'click', function(e){
+                            e.preventDefault();
+                            window.socket.emit('send', {
+                                key: window.key,
+                                act: 'prev',
+                                data: {}
+                            });
+                        });
+                        var nextBtn = D.get('#J_Next');
+                        E.on(nextBtn, 'click', function(e){
+                            e.preventDefault();
+                            window.socket.emit('send', {
+                                key: window.key,
+                                act: 'next',
+                                data: {}
+                            });
+                        });
                     }else{}
 
                 });

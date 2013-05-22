@@ -29,7 +29,8 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
     var $ = S.all;
     var logoEl = $('#J_Logo'),
-        backEl = $('#J_Back');
+        backEl = $('#J_Back'),
+        settingBtn = $('#J_SettingBtn');
 
     var app = MS({
         viewpath: 'main.html',
@@ -46,12 +47,22 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
     NS = app;
 
     NS.toggleNav = function (el) {
-        if (el === 'logo') {
-            logoEl.fadeIn(0.2);
-            backEl.fadeOut(0.2);
-        } else {
-            backEl.fadeIn(0.2);
-            logoEl.fadeOut(0.2);
+        switch(el){
+            case 'logo':
+                logoEl.fadeIn(0.2);
+                backEl.fadeOut(0.2);
+                settingBtn.fadeOut(0.2);
+                break;
+            case 'setting':
+                logoEl.fadeOut(0.2);
+                backEl.fadeIn(0.2);
+                settingBtn.fadeIn(.2);
+                break;
+            default :
+                backEl.fadeIn(0.2);
+                logoEl.fadeOut(0.2);
+                settingBtn.fadeOut(.2);
+                break;
         }
     };
 
@@ -129,8 +140,10 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
                 case key + '_reset':
                     break;
                 case key + '_next':
+                    console.log('[control] next page');
                     break;
                 case key + '_prev':
+                    console.log('[control] prev page');
                     break;
                 case key + '_move':
                     if(app.get('viewpath') !== 'main.html'){

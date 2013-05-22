@@ -81,6 +81,16 @@ body {
     height: 30px;
     background: #181818;
 }
+.setting-btn {
+    display: none;
+    width: 24px;
+    height: 24px;
+    background: url("../images/edit-page.png") no-repeat 100% 0;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin: -12px 0 0;
+}
 
 .MS-con {
     position: relative;
@@ -246,6 +256,20 @@ body {
 
 }
 
+.control-ppt-area {
+    display: none;
+    height: 120px;
+    background: #000 url("../images/control_Bar_2x.png") no-repeat 50% 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.enter-control,
+.save-ppt {
+    height: 120px;
+}
 /*@media only screen and (max-width: 768px) {*/
 
 /*}*/

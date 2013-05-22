@@ -9,15 +9,22 @@
     <div class="facebottom tb">6</div>
   </div>
 </div>
-
   <ul id="J_PPPTBox" style="display: none;">
   </ul>
+    <div class="showing-ppt style-rotate" id="J_ShowingPPT">
+        <ul id="J_PPPTBox">
+        </ul>
+    </div>
 </div>
+    <div id="J_ControlArea" class="control-ppt-area">
+        <div class="enter-control"></div>
+        <div class="save-ppt"></div>
+    </div>
 </section>
 <script>
-KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
-  var $ = S.all;
-  var minShowTpl = '<li class="" data-c="{{index}}">\
+    KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+        var $ = S.all;
+        var minShowTpl = '<li class="" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -34,82 +41,94 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
                     </li>';
 
 
-  MS.startup(function (data) {
-        var app = this;
-        NS.toggleNav('back');
+        MS.startup(function (data) {
+            var app = this;
+            NS.toggleNav(mobile == 'true' ? 'setting' : 'back');
 
-        begin();
+            begin();
 
-    });
+            if(mobile == 'true'){
+                var controlTimer;
+                var $controlArea = $('#J_ControlArea');
+                $('#J_SettingBtn').on('click', function(e){
+                    $controlArea.slideUp();
+                    controlTimer && clearTimeout(controlTimer);
+                    controlTimer = setTimeout(function(){
+                        $controlArea.slideDown();
+                    }, 1500);
+                });
+            }
 
-    MS.teardown(function () {
-        // 注册 teardown
-    });
+        });
 
-    MS.includeOnce(function () {
-        // 注册 includeOnce
-    });
+        MS.teardown(function () {
+            // 注册 teardown
+        });
 
-    var g_pptdata = [];
-    function begin(){
-      g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
-      cLen = g_pptdata.length;
+        MS.includeOnce(function () {
+            // 注册 includeOnce
+        });
 
-      // rotateTo(0, cLen)
-      renderPPT();
-      
-      eventHanlde();
-    }
+        var g_pptdata = [];
+        function begin(){
+            g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+            cLen = g_pptdata.length;
 
+            // rotateTo(0, cLen)
+            renderPPT();
 
-    function eventHanlde(){
-      //光标移动 左、右
-      $(document).on('keyup', function(e){
-        if( e.keyCode == 37){
-          _prev();
+            eventHanlde();
         }
-        else if( e.keyCode == 39){
-          _next();
-        }
-      })
 
-      var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
-      $('#J_PPPTBox').delegate(doubleTap,'.J_PPTItem', function(e){
-        var target = $(e.currentTarget);
-        if(target.css('-webkit-transform') == 'none'){
-          var _x = e.offsetX, _y = e.offsetY;
-          target.css('-webkit-transform', 'scale(2)');
-          target.css('-webkit-transform-origin', _x + ' ' + _y);
-        }
-        else{
-          target.css('-webkit-transform', '');
-        }
-      })
 
-      $('#J_PPPTBox').on('swipe', function(e){
-        if( e.direction == 'left'){
-          _next();
-        }
-        else if(e.direction == 'right'){
-          _prev();
-        }
-      })
-    }
+        function eventHanlde(){
+            //光标移动 左、右
+            $(document).on('keyup', function(e){
+                if( e.keyCode == 37){
+                    _prev();
+                }
+                else if( e.keyCode == 39){
+                    _next();
+                }
+            })
 
-    //渲染ppt
-    function renderPPT(){
-      KISSY.use('template', function(S, TT){
-        S.each(g_pptdata, function(item, idx){
-          $('#J_PPPTBox').append( $( TT(minShowTpl).render({
-            data: item
-            ,index: idx
-            // ,left: idx * 950
-          }) ) )
-        })
+            var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
+            $('#J_PPPTBox').delegate(doubleTap,'.J_PPTItem', function(e){
+                var target = $(e.currentTarget);
+                if(target.css('-webkit-transform') == 'none'){
+                    var _x = e.offsetX, _y = e.offsetY;
+                    target.css('-webkit-transform', 'scale(2)');
+                    target.css('-webkit-transform-origin', _x + ' ' + _y);
+                }
+                else{
+                    target.css('-webkit-transform', '');
+                }
+            })
 
-        $('#J_PPPTBox').css('width', g_pptdata.length * 950 + 'px');
-      })
-    }
+            $('#J_PPPTBox').on('swipe', function(e){
+              if( e.direction == 'left'){
+                _next();
+              }
+              else if(e.direction == 'right'){
+                _prev();
+              }
+            })
+        }
+
+        //渲染ppt
+        function renderPPT(){
+            KISSY.use('template', function(S, TT){
+                S.each(g_pptdata, function(item, idx){
+                    $('#J_PPPTBox').append( $( TT(minShowTpl).render({
+                        data: item
+                        ,index: idx
+                        // ,left: idx * 950
+                    }) ) )
+                })
+
+                $('#J_PPPTBox').css('width', g_pptdata.length * 950 + 'px');
+            })
+        }
 
     var cLeft = 0, cIdx = 0, cLen = 0;
     var playStyle = 'rotate';
@@ -181,5 +200,6 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
         next&&(next.className = 'cur transform-origin-top-left');
       }
     }
+    
 });
 </script>
