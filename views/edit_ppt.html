@@ -8,9 +8,9 @@
                 <div class="setting" id="J_Setting"></div>
                 <div class="setting-detail" id="J_SettingDetail" style="display: none;">
                     <ul>
-                        <li>±£´æ</li>
-                        <li>·ÖÏí</li>
-                        <li>É¾³ı</li>
+                        <li>ä¿å­˜</li>
+                        <li>åˆ†äº«</li>
+                        <li>åˆ é™¤</li>
                     </ul>
                     <s></s>
                 </div>
@@ -30,10 +30,10 @@
             <div class="preview-btn"></div>
         </div>
         <div class="other-ctl">
-            <a href="#" class="save J_Save">±£´æ</a>
-            <a href="#" class="link J_Link">Á´½Ó</a>
-            <a href="play_ppt.html" class="play" id="J_Play">²¥·Å</a>
-            <a href="#" class="tdc" id="J_Tdc">¶şÎ¬Âë</a>
+            <a href="#" class="save J_Save">ä¿å­˜</a>
+            <a href="#" class="link J_Link">é“¾æ¥</a>
+            <a href="play_ppt.html" class="play" id="J_Play">æ’­æ”¾</a>
+            <a href="#" class="tdc" id="J_Tdc">äºŒç»´ç </a>
         </div>
     </div>
 
@@ -47,24 +47,24 @@
 
         var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
                       <input class="J_TitleEdit" type="text" value="{{data.title.text}}" \
-                      placeholder="µ¥»÷´Ë´¦Ìí¼Ó±êÌâ"/>\
+                      placeholder="å•å‡»æ­¤å¤„æ·»åŠ æ ‡é¢˜"/>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
-                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="µ¥»÷´Ë´¦Ìí¼Ó¸±±êÌâ"/>\
+                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="å•å‡»æ­¤å¤„æ·»åŠ å‰¯æ ‡é¢˜"/>\
                     </div>';
         var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
                       {{#else}}\
-                      µ¥»÷´Ë´¦Ìí¼Ó±êÌâ\
+                      å•å‡»æ­¤å¤„æ·»åŠ æ ‡é¢˜\
                       {{/if}}\
                       </div>\
                       <div class="desc" style="margin: {{data.desc.margin}}">\
                       {{#if data.desc.text}}\
                       {{data.desc.text}}</div>\
                       {{#else}}\
-                      µ¥»÷´Ë´¦Ìí¼Ó¸±±êÌâ\
+                      å•å‡»æ­¤å¤„æ·»åŠ å‰¯æ ‡é¢˜\
                       {{/if}}\
                     </li>';
         var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
@@ -87,17 +87,17 @@
         });
 
         MS.teardown(function () {
-            // ×¢²á teardown
+            // æ³¨å†Œ teardown
         });
 
         MS.includeOnce(function () {
-            // ×¢²á includeOnce
+            // æ³¨å†Œ includeOnce
         });
 
-        var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"Ö÷±êÌâÒ»"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"Ö÷±êÌâ¶ş"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
+        var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"ä¸»æ ‡é¢˜ä¸€"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"ä¸»æ ‡é¢˜äºŒ"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
 
         function begin(){
-            //¶Á±¾µØ´æ´¢
+            //è¯»æœ¬åœ°å­˜å‚¨
             if( localStorage.getItem('pptData') ){
                 g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
             }
@@ -105,12 +105,12 @@
             KISSY.use('template', function(S, TT){
                 showEditingItemByIdx(currentEditingIdx);
 
-                //·µ»Ø
+                //è¿”å›
                 // $('#J_GoBack').on(clickEventName, function(){
                 //   window.history.go(-1);
                 // })
 
-                //ÉèÖÃ
+                //è®¾ç½®
                 // $('#J_Setting').on(clickEventName, function(){
 
                 // })
@@ -119,12 +119,12 @@
                 $('#J_MinShow').on(clickEventName,  function(e){
                     var target = $(e.target);
 
-                    //ĞÂÔöÒ»¸öpptÒ³
+                    //æ–°å¢ä¸€ä¸ªppté¡µ
                     if( target.hasClass('J_AddBtn') ){
                         addOnePage();
                     }
 
-                    //ËõÂÔÍ¼ µã»÷ÊÂ¼ş
+                    //ç¼©ç•¥å›¾ ç‚¹å‡»äº‹ä»¶
                     else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
                         var idx = target.attr('data-c');
                         saveEditingItem(currentEditingIdx);
@@ -135,19 +135,19 @@
                     }
                 })
 
-                //²¥·Å
+                //æ’­æ”¾
                 $('#J_Play').on(clickEventName, function(e){
                     previewPPT();
                 })
 
-                //Ô¤ÀÀ
+                //é¢„è§ˆ
                 $('#J_PreviewBtn').on(clickEventName, function(){
                     previewPPT();
                 })
 
                 //-----------------------------------------------actions
 
-                //Ìí¼ÓÒ»Ò³ppt
+                //æ·»åŠ ä¸€é¡µppt
                 function addOnePage(){
                     g_pptdata.push({
                         title: {
@@ -166,7 +166,7 @@
                     showEditingItemByIdx(currentEditingIdx);
                 }
 
-                //µã»÷Ô¤ÀÀ
+                //ç‚¹å‡»é¢„è§ˆ
                 function previewPPT(){
                     saveEditingItem(currentEditingIdx);
                     localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
@@ -175,7 +175,7 @@
                 //init render minShow
                 renderMinShow();
 
-                //äÖÈ¾
+                //æ¸²æŸ“
                 function renderMinShow(){
                     var minShow = $('#J_MinShow');
                     var _html = '';
@@ -190,14 +190,14 @@
                     minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
                 }
 
-                //ÏÔÊ¾±à¼­idxÒ³ ppt´óÍ¼
+                //æ˜¾ç¤ºç¼–è¾‘idxé¡µ pptå¤§å›¾
                 function showEditingItemByIdx(idx){
                     editingPage.html(TT(editingTpl).render({
                         data: g_pptdata[idx]
                     }));
                 }
 
-                //±£´æÕıÔÚ±à¼­µÄpptÒ³
+                //ä¿å­˜æ­£åœ¨ç¼–è¾‘çš„ppté¡µ
                 function saveEditingItem(idx){
                     var box = $('#J_EditingPage');
                     g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
