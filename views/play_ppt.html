@@ -3,7 +3,7 @@
         <ul id="J_PPPTBox">
         </ul>
     </div>
-    <div class="control-ppt">
+    <div id="J_ControlArea" class="control-ppt-area">
         <div class="enter-control"></div>
         <div class="save-ppt"></div>
     </div>
@@ -34,9 +34,16 @@
 
             begin();
 
-
             if(mobile == 'true'){
-
+                var controlTimer;
+                var $controlArea = $('#J_ControlArea');
+                $('#J_SettingBtn').on('click', function(e){
+                    $controlArea.slideUp();
+                    controlTimer && clearTimeout(controlTimer);
+                    controlTimer = setTimeout(function(){
+                        $controlArea.slideDown();
+                    }, 1500);
+                });
             }
 
         });

@@ -256,6 +256,20 @@ body {
 
 }
 
+.control-ppt-area {
+    display: none;
+    height: 120px;
+    background: #000 url("../images/control_Bar_2x.png") no-repeat 50% 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.enter-control,
+.save-ppt {
+    height: 120px;
+}
 /*@media only screen and (max-width: 768px) {*/
 
 /*}*/
