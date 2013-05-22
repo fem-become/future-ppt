@@ -1,7 +1,7 @@
-?<section>
+<section>
     <div class="edit-panel">
         <div class="opacity-bg"></div>
-        <div class="top-ctl">
+        <!-- <div class="top-ctl">
             <div class="mid-box">
 
                 <div class="go-back" id="J_GoBack"></div>
@@ -15,7 +15,7 @@
                     <s></s>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="edit-box">
             <div class="editing-page" id="J_EditingPage">
             </div>
@@ -26,9 +26,9 @@
                 </div>
             </div>
         </div>
-        <div class="preview-btn-wrap" id="J_PreviewBtn">
+        <a href="play_ppt.html" class="preview-btn-wrap" id="J_PreviewBtn">
             <div class="preview-btn"></div>
-        </div>
+        </a>
         <div class="other-ctl">
             <a href="#" class="save J_Save">保存</a>
             <a href="#" class="link J_Link">链接</a>
@@ -44,13 +44,14 @@
 </section>
 <script>
     KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+        var $ = S.all;
 
         var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
-                      <input class="J_TitleEdit" type="text" value="{{data.title.text}}" \
-                      placeholder="单击此处添加标题"/>\
+                      <textarea class="J_TitleEdit" type="text" \
+                      placeholder="单击此处添加标题">{{data.title.text}}</textarea>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
-                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="单击此处添加副标题"/>\
+                      <textarea class="J_DescEdit" type="text" placeholder="单击此处添加副标题">{{data.desc.text}}</textarea>\
                     </div>';
         var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
@@ -95,7 +96,7 @@
         });
 
 
-var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
+var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}}];
 
         function begin(){
             //读本地存储
@@ -116,24 +117,35 @@ var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"m
 
                 // })
 
-
-                $('#J_MinShow').on(clickEventName,  function(e){
-                    var target = $(e.target);
-
+                
+                $('#J_MinShow').delegate(clickEventName, 'li',  function(e){
+                    var target = $(e.currentTarget);
                     //新增一个ppt页
                     if( target.hasClass('J_AddBtn') ){
                         addOnePage();
+                        return ;
                     }
 
                     //缩略图 点击事件
-                    else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
-                        var idx = target.attr('data-c');
-                        saveEditingItem(currentEditingIdx);
-                        if( idx != undefined ){
-                            currentEditingIdx = parseInt(idx);
-                            showEditingItemByIdx(currentEditingIdx);
-                        }
+                    var idx = target.attr('data-c');
+                    saveEditingItem(currentEditingIdx);
+                    if( idx != undefined ){
+                        currentEditingIdx = parseInt(idx);
+                        showEditingItemByIdx(currentEditingIdx);
                     }
+                })
+
+                var minShowLeft = 0;
+                $('#J_MinShow').on('swipe', function(e){
+                  var maxMinShowLeft = $('#J_MinShow').width();
+                  if( e.direction == 'left'){
+                    minShowLeft -= e.distance;
+                  }
+                  else if(e.direction == 'right'){
+                    minShowLeft += e.distance;
+                  }
+                  // if( minShow >)
+                  $('#J_MinShow').css('left', minShowLeft + 'px');
                 })
 
                 //播放

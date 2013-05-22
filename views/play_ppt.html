@@ -6,6 +6,7 @@
 </section>
 <script>
 KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+  var $ = S.all;
   var minShowTpl = '<li class="" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
@@ -63,18 +64,15 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
       })
 
       var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
-      $('#J_PPPTBox').on(doubleTap, function(e){
-        var target = $(e.target);
-          console.log(target)
-        if( target.hasClass('J_PPTItem') || (target=target.parent('J_PPTItem')) ){
-          if(target.css('-webkit-transform') == 'none'){
-            var _x = e.offsetX, _y = e.offsetY;
-            target.css('-webkit-transform', 'scale(2)');
-            target.css('-webkit-transform-origin', _x + ' ' + _y);
-          }
-          else{
-            target.css('-webkit-transform', '');
-          }
+      $('#J_PPPTBox').delegate(doubleTap,'.J_PPTItem', function(e){
+        var target = $(e.currentTarget);
+        if(target.css('-webkit-transform') == 'none'){
+          var _x = e.offsetX, _y = e.offsetY;
+          target.css('-webkit-transform', 'scale(2)');
+          target.css('-webkit-transform-origin', _x + ' ' + _y);
+        }
+        else{
+          target.css('-webkit-transform', '');
         }
       })
     }
@@ -132,7 +130,6 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
       if(type == 'prev'){
         prev&&(prev.className = 'cur transform-origin-top-right');
         cur.className = 'next transform-origin-top-left';
-        
       }
       else{
         cur.className = 'prev transform-origin-top-right';

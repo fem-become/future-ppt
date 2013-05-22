@@ -236,7 +236,7 @@
 .setting,
 .preview-btn,
 .setting-detail s {
-  background-image: url(../../images/edit-page.png);
+  background-image: url(../images/edit-page.png);
   background-repeat: no-repeat;
 }
 .top-ctl {
@@ -284,15 +284,6 @@
   position: relative;
   z-index: 99999;
 }
-.edit-panel .opacity-bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-  background-color: #3b3b3b;
-  z-index: -1;
-}
 .edit-panel .edit-box {
   position: relative;
   width: 300px;
@@ -303,10 +294,11 @@
   overflow: hidden;
   min-height: 220px;
 }
-.edit-panel .edit-box input[type=text],
-.edit-panel .edit-box textarea {
-  resize: none;
+.edit-panel .edit-box input[type=text] {
   height: 16px;
+}
+.edit-panel .edit-box textarea {
+  height: 30px;
 }
 .edit-panel ::-webkit-scrollbar-track-piece {
   background-color: #fff;
@@ -339,6 +331,21 @@
   visibility: hidden;
   clear: both;
 }
+.edit-panel .waiting-page ul {
+  position: relative;
+  left: 0;
+  -webkit-transition-duration: 0.2s;
+  margin: 0;
+  padding-left: 0;
+  *zoom: 1;
+}
+.edit-panel .waiting-page ul:after {
+  content: '\20';
+  display: block;
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
 .edit-panel .waiting-page li {
   float: left;
   width: 110px;
@@ -362,25 +369,6 @@
 }
 .edit-panel .waiting-page .add-btn:hover {
   opacity: 0.5;
-}
-.edit-panel .preview-btn-wrap {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: -webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
-  background: -moz-linear-gradient(top, #64d0ed, #1b7fb1);
-  border-bottom: 1px solid #404040;
-  cursor: pointer;
-}
-.edit-panel .preview-btn-wrap .preview-btn {
-  position: relative;
-  top: 12px;
-  width: 27px;
-  height: 34px;
-  margin: 0 auto;
-  background-position: 0 -32px;
 }
 .edit-panel .other-ctl {
   display: none;
@@ -443,9 +431,6 @@
     width: auto;
     font-size: 8px;
   }
-  .edit-panel .edit-box .waiting-page-wrap .waiting-page ul {
-    padding-left: 0;
-  }
   .edit-panel .edit-box .waiting-page-wrap li {
     margin-bottom: 10px;
     cursor: pointer;
@@ -465,6 +450,23 @@
   }
   .crumbs {
     display: none;
+  }
+  .preview-btn-wrap {
+    display: block;
+    height: 60px;
+    overflow: hidden;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
+    background: -moz-linear-gradient(top, #64d0ed, #1b7fb1);
+    border-bottom: 1px solid #404040;
+    cursor: pointer;
+  }
+  .preview-btn-wrap .preview-btn {
+    position: relative;
+    top: 12px;
+    width: 27px;
+    height: 34px;
+    margin: 0 auto;
+    background-position: 0 -32px;
   }
 }
 /*
@@ -502,24 +504,31 @@
   -webkit-transform-style: preserve-3d;
   -webkit-transition: all 1s ease;
 }
+.style-rotate ul li {
+  -webkit-transition-duration: 1s;
+}
 .style-rotate ul .prev {
   left: -960px;
   -webkit-transform: rotateY(-90deg);
-  -webkit-transition-duration: 1s;
+  -webkit-transform-origin: top right;
+}
+.style-rotate ul .prev-hide {
+  left: 0;
+  -webkit-transform: rotateY(-90deg);
+  -webkit-transform-origin: top right;
 }
 .style-rotate ul .next {
   left: 960px;
   -webkit-transform: rotateY(90deg);
-  -webkit-transition-duration: 1s;
+  -webkit-transform-origin: top left;
+}
+.style-rotate ul .next-hide {
+  left: 0;
+  -webkit-transform: rotateY(90deg);
+  -webkit-transform-origin: top left;
 }
 .style-rotate ul .cur {
   left: 0;
   -webkit-transform: rotateY(0deg);
-  -webkit-transition-duration: 1s;
-}
-.style-rotate ul .transform-origin-top-right {
   -webkit-transform-origin: top right;
-}
-.style-rotate ul .transform-origin-top-left {
-  -webkit-transform-origin: top left;
 }

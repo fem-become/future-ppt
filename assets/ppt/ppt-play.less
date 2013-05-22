@@ -38,29 +38,32 @@
     -webkit-transform-style: preserve-3d;
     -webkit-transition: all 1s ease;
     li{
+    -webkit-transition-duration: 1s;
     }
     .prev{
       left: -@pptItemLen;
       -webkit-transform: rotateY(-90deg);
-      -webkit-transition-duration: 1s;
-      // -webkit-transform-origin: top right;
+      -webkit-transform-origin: top right;
+    }
+    .prev-hide{
+      left: 0;
+      -webkit-transform: rotateY(-90deg);
+      -webkit-transform-origin: top right;
     }
     .next{
       left: @pptItemLen;
       -webkit-transform: rotateY(90deg);
-      -webkit-transition-duration: 1s;
-      // -webkit-transform-origin: top left;
+      -webkit-transform-origin: top left;
+    }
+    .next-hide{
+      left: 0;
+      -webkit-transform: rotateY(90deg);
+      -webkit-transform-origin: top left; 
     }
     .cur{
       left: 0;
       -webkit-transform: rotateY(0deg);
-      -webkit-transition-duration: 1s;
-    }
-    .transform-origin-top-right{
       -webkit-transform-origin: top right;
-    }
-    .transform-origin-top-left{
-      -webkit-transform-origin: top left;
     }
   }
 }
