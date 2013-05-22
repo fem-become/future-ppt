@@ -478,21 +478,48 @@
   position: relative;
   margin: 0 auto;
   width: 950px;
-  height: 420px;
 }
 .showing-ppt ul {
   position: absolute;
   margin-top: 0;
   padding-left: 0;
-  -webkit-transition: all 1s ease;
+  height: 420px;
 }
 .showing-ppt li {
   position: absolute;
   top: 0;
-  width: 950px;
-  margin-right: 50px;
+  width: 960px;
+  height: 100%;
   overflow: hidden;
 }
 @media screen and (min-width: 980px) {
   
+}
+.style-rotate {
+  -webkit-perspective: 1000;
+}
+.style-rotate ul {
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: all 1s ease;
+}
+.style-rotate ul .prev {
+  left: -960px;
+  -webkit-transform: rotateY(-90deg);
+  -webkit-transition-duration: 1s;
+}
+.style-rotate ul .next {
+  left: 960px;
+  -webkit-transform: rotateY(90deg);
+  -webkit-transition-duration: 1s;
+}
+.style-rotate ul .cur {
+  left: 0;
+  -webkit-transform: rotateY(0deg);
+  -webkit-transition-duration: 1s;
+}
+.style-rotate ul .transform-origin-top-right {
+  -webkit-transform-origin: top right;
+}
+.style-rotate ul .transform-origin-top-left {
+  -webkit-transform-origin: top left;
 }

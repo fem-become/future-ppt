@@ -1,6 +1,8 @@
 /*
   ppt playing
 */
+@pptItemLen: 960px;
+
 .showing-ppt, .showing-ppt li{
   min-height: 300px;
 }
@@ -9,22 +11,56 @@
   margin: 0 auto;
   width: 950px;
   // overflow: hidden;
-  height: 420px;
   ul{
     position: absolute;
     margin-top: 0;
     padding-left: 0;
-    -webkit-transition: all 1s ease;
+    height: 420px;
   }
   li{
     position: absolute;
     top: 0;
-    width: 950px;
-    margin-right: 50px;
+    width: @pptItemLen;
+    // margin: 0 10px;
+    height: 100%;
     overflow: hidden;
   }
 }
 @media screen and (min-width: 980px) {
   .showing-ppt{
+  }
+}
+
+//旋转效果
+.style-rotate{
+  -webkit-perspective: 1000;
+  ul{
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: all 1s ease;
+    li{
+    }
+    .prev{
+      left: -@pptItemLen;
+      -webkit-transform: rotateY(-90deg);
+      -webkit-transition-duration: 1s;
+      // -webkit-transform-origin: top right;
+    }
+    .next{
+      left: @pptItemLen;
+      -webkit-transform: rotateY(90deg);
+      -webkit-transition-duration: 1s;
+      // -webkit-transform-origin: top left;
+    }
+    .cur{
+      left: 0;
+      -webkit-transform: rotateY(0deg);
+      -webkit-transition-duration: 1s;
+    }
+    .transform-origin-top-right{
+      -webkit-transform-origin: top right;
+    }
+    .transform-origin-top-left{
+      -webkit-transform-origin: top left;
+    }
   }
 }
