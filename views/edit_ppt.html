@@ -1,4 +1,4 @@
-﻿<section>
+?<section>
     <div class="edit-panel">
         <div class="opacity-bg"></div>
         <div class="top-ctl">
@@ -42,18 +42,17 @@
         </ul>
     </div> -->
 </section>
-<script src=""></script>
 <script>
-KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+    KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
 
-  var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
+        var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
                       <input class="J_TitleEdit" type="text" value="{{data.title.text}}" \
                       placeholder="单击此处添加标题"/>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
                       <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="单击此处添加副标题"/>\
                     </div>';
-  var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
+        var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -67,147 +66,149 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
                       {{#else}}\
                       单击此处添加副标题\
                       {{/if}}\
-                    </li>'
-    var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
+                    </li>';
+        var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
                   <span>{{data.title.text}}</span>\
                 </div>\
                 <div class="desc" style="margin: {{data.desc.offset}}">\
                   <span>{{data.desc.text}}</span>\
                 </div>';
-    
-    var currentEditingIdx = 0;
 
-    var editingPage = $('#J_EditingPage');
+        var currentEditingIdx = 0;
 
-    var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
-    MS.startup(function (data) {
-        var app = this;
-        NS.toggleNav('back');
-        begin();
+        var editingPage = $('#J_EditingPage');
 
-    });
+        var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
+        MS.startup(function (data) {
+            var app = this;
+            NS.toggleNav('back');
+            begin();
 
-    MS.teardown(function () {
-        // 注册 teardown
-    });
-
-    MS.includeOnce(function () {
-        // 注册 includeOnce
-    });
-
-var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题三"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}}];
-
-function begin(){
-  //读本地存储
-  if( localStorage.getItem('pptData') ){
-    g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
-  }
-
-  KISSY.use('template', function(S, TT){
-    showEditingItemByIdx(currentEditingIdx);
-
-    //返回
-    // $('#J_GoBack').on(clickEventName, function(){
-    //   window.history.go(-1);
-    // })
-  
-    //设置
-    // $('#J_Setting').on(clickEventName, function(){
-
-    // })
-    
-  
-    $('#J_MinShow').on(clickEventName,  function(e){
-      var target = $(e.target);
-
-      //新增一个ppt页
-      if( target.hasClass('J_AddBtn') ){
-        addOnePage();
-      }
-
-      //缩略图 点击事件
-      else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
-        var idx = target.attr('data-c');
-        saveEditingItem(currentEditingIdx);
-        if( idx != undefined ){
-          currentEditingIdx = parseInt(idx);
-          showEditingItemByIdx(currentEditingIdx);
-        }
-      }
-    })
-
-    //播放
-    $('#J_Play').on(clickEventName, function(e){
-      previewPPT();
-    })
-
-    //预览
-    $('#J_PreviewBtn').on(clickEventName, function(){
-      previewPPT();
-    })
-
-    //-----------------------------------------------actions
-
-    //添加一页ppt
-    function addOnePage(){
-      g_pptdata.push({
-        title: {
-          margin: '20% 10% 0',
-          text: ''
-        },
-        desc: {
-          margin: '2% 10% 0',
-          text: ''
-        }
-      });
-
-      //render minShow and editing this new page
-      renderMinShow();
-      currentEditingIdx = g_pptdata.length - 1;
-      showEditingItemByIdx(currentEditingIdx);
-    }
-
-    //点击预览
-    function previewPPT(){
-      saveEditingItem(currentEditingIdx);
-      localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
-    }
-
-    //init render minShow
-    renderMinShow();
-
-    //渲染
-    function renderMinShow(){
-      var minShow = $('#J_MinShow');
-      var _html = '';
-      S.each(g_pptdata, function(item, idx){
-
-        _html += TT(minShowTpl).render({
-          data: item,
-          index: idx
         });
-      })
 
-      minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
-    }
+        MS.teardown(function () {
+            // 注册 teardown
+        });
 
-    //显示编辑idx页 ppt大图
-    function showEditingItemByIdx(idx){
-      editingPage.html(TT(editingTpl).render({
-        data: g_pptdata[idx]
-      }));
-    }
+        MS.includeOnce(function () {
+            // 注册 includeOnce
+        });
 
-    //保存正在编辑的ppt页
-    function saveEditingItem(idx){
-      var box = $('#J_EditingPage');
-      g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
-      g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
 
-      renderMinShow();
-    }
+var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
 
-  });
-}
+        function begin(){
+            //读本地存储
+            if( localStorage.getItem('pptData') ){
+                g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+            }
+
+            KISSY.use('template', function(S, TT){
+                showEditingItemByIdx(currentEditingIdx);
+
+                //返回
+                // $('#J_GoBack').on(clickEventName, function(){
+                //   window.history.go(-1);
+                // })
+
+                //设置
+                // $('#J_Setting').on(clickEventName, function(){
+
+                // })
+
+
+                $('#J_MinShow').on(clickEventName,  function(e){
+                    var target = $(e.target);
+
+                    //新增一个ppt页
+                    if( target.hasClass('J_AddBtn') ){
+                        addOnePage();
+                    }
+
+                    //缩略图 点击事件
+                    else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
+                        var idx = target.attr('data-c');
+                        saveEditingItem(currentEditingIdx);
+                        if( idx != undefined ){
+                            currentEditingIdx = parseInt(idx);
+                            showEditingItemByIdx(currentEditingIdx);
+                        }
+                    }
+                })
+
+                //播放
+                $('#J_Play').on(clickEventName, function(e){
+                    previewPPT();
+                })
+
+                //预览
+                $('#J_PreviewBtn').on(clickEventName, function(){
+                    previewPPT();
+                })
+
+                //-----------------------------------------------actions
+
+                //添加一页ppt
+                function addOnePage(){
+                    g_pptdata.push({
+                        title: {
+                            margin: '20% 10% 0',
+                            text: ''
+                        },
+                        desc: {
+                            margin: '2% 10% 0',
+                            text: ''
+                        }
+                    });
+
+                    //render minShow and editing this new page
+                    renderMinShow();
+                    currentEditingIdx = g_pptdata.length - 1;
+                    showEditingItemByIdx(currentEditingIdx);
+                }
+
+                //点击预览
+                function previewPPT(){
+                    saveEditingItem(currentEditingIdx);
+                    localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
+                }
+
+                //init render minShow
+                renderMinShow();
+
+                //渲染
+                function renderMinShow(){
+                    var minShow = $('#J_MinShow');
+                    var _html = '';
+                    S.each(g_pptdata, function(item, idx){
+
+                        _html += TT(minShowTpl).render({
+                            data: item,
+                            index: idx
+                        });
+                    })
+
+                    minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
+                }
+
+                //显示编辑idx页 ppt大图
+                function showEditingItemByIdx(idx){
+                    editingPage.html(TT(editingTpl).render({
+                        data: g_pptdata[idx]
+                    }));
+                }
+
+                //保存正在编辑的ppt页
+                function saveEditingItem(idx){
+                    var box = $('#J_EditingPage');
+                    g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
+                    g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
+
+                    renderMinShow();
+                }
+
+            });
+        }
 });
+
 </script>

@@ -38,7 +38,9 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
         pageCache: true,
         webkitOptimize: true,
         positionMemory: true,
-        animWrapperAutoHeightSetting: true
+        animWrapperAutoHeightSetting: true,
+        containerHeighTimmer: false,
+        hideURIbar: true
     });
 
     NS = app;
@@ -58,11 +60,18 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
     var curPage = app.get('viewpath');
 
-//    if(curPage){
-//        if(!/&key=(\d+)/.test(location.hash)){
-//            location.hash = location.hash + '&key=' + window.key;
-//        }
-//    }
+    var navEl = D.get('#MS-nav');
+    var msContentEl = D.get('#J_MSContent');
+    var msContentDivEl = D.children(msContentEl, 'div');
+    var timer;
+    function resize(){
+        timer && clearTimeout(timer);
+        timer = setTimeout(function(){
+            var height = D.viewportHeight() - D.height(navEl);
+            D.css(msContentEl, 'height', height);
+            D.css(msContentDivEl, 'height', height);
+        }, 100);
+    }
 
     if(mobile == 'true'){
         S.log('this is mobile client.');
@@ -80,7 +89,28 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
                 page: app.get('viewpath')
             });
         });
+
+        function hideAddressBar()
+        {
+//            if(!window.location.hash)
+//            {
+                if(document.height < window.outerHeight)
+                {
+                    document.body.style.height = (window.outerHeight + 50) + 'px';
+                }
+
+                setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
+//            }
+        }
+
+        window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+        window.addEventListener("orientationchange", hideAddressBar );
     }else{
+
+        resize();
+
+        E.on(window, 'resize', resize);
+
         S.log('start to listen to socket.');
         socket.on('get_response', function (data) {
             var combine = data.key + '_' + data.act;
