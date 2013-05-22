@@ -30,7 +30,7 @@
 
         MS.startup(function (data) {
             var app = this;
-            NS.toggleNav('setting');
+            NS.toggleNav(mobile == 'true' ? 'setting' : 'back');
 
             begin();
 
