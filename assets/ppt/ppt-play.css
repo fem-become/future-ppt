@@ -1,0 +1,31 @@
+/*
+  ppt playing
+*/
+
+.showing-ppt,
+.showing-ppt li {
+  min-height: 300px;
+}
+.showing-ppt {
+  position: relative;
+  margin: 0 auto;
+  width: 950px;
+}
+.showing-ppt ul {
+  position: absolute;
+  margin-top: 0;
+  padding-left: 0;
+  -webkit-transition: all 1s ease;
+  height: 420px;
+}
+.showing-ppt li {
+  position: absolute;
+  top: 0;
+  width: 950px;
+  height: 100%;
+  margin-right: 50px;
+  overflow: hidden;
+}
+@media screen and (min-width: 980px) {
+  
+}

@@ -2,7 +2,7 @@
   编辑ppt style
 */
 .go-back, .setting, .preview-btn, .setting-detail s{
-  background-image: url(../../images/edit-page.png);
+  background-image: url(../images/edit-page.png);
   background-repeat: no-repeat;
 }
 
@@ -50,15 +50,15 @@
 .edit-panel{
   position: relative;
   z-index: 99999;
-  .opacity-bg{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    background-color: #3b3b3b;
-    z-index: -1;
-  }
+  // .opacity-bg{
+  //   position: fixed;
+  //   width: 100%;
+  //   height: 100%;
+  //   left: 0;
+  //   top: 0;
+  //   background-color: #3b3b3b;
+  //   z-index: -1;
+  // }
   .edit-box{
     position: relative;
     width: 300px;
@@ -68,9 +68,11 @@
       overflow: hidden;
       min-height: 220px;
     }
-    input[type=text], textarea{
-      resize: none;
+    input[type=text]{
       height: 16px;
+    }
+    textarea{
+      height: 30px;
     }
   }
   ::-webkit-scrollbar-track-piece{background-color:#fff;}
@@ -90,6 +92,15 @@
   .waiting-page{
     .clearfix();
     width: 999px;
+    ul{
+      position: relative;
+      left: 0;
+      // height: 120px;
+      -webkit-transition-duration: 0.2s;
+      margin: 0;
+      padding-left: 0;
+      .clearfix();
+    }
     li{
       float: left;
       width: 110px;
@@ -113,25 +124,6 @@
       &:hover{
         opacity: 0.5;
       }
-    }
-  }
-  .preview-btn-wrap{
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60px;
-    background:-webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
-    background:-moz-linear-gradient(top, #64d0ed, #1b7fb1);
-    border-bottom: 1px solid #404040;
-    cursor: pointer;
-    .preview-btn{
-      position: relative;
-      top: 12px;
-      width: 27px;
-      height: 34px;
-      margin: 0 auto;
-      background-position: 0 -32px;
     }
   }
   .other-ctl{
@@ -194,9 +186,6 @@
         .waiting-page{
           width: auto;
           font-size: 8px;
-          ul{
-            padding-left: 0;
-          }
         }
         li{
           margin-bottom: 10px;
@@ -220,5 +209,26 @@
   }
   .crumbs{
     display: none;
+  }
+  .preview-btn-wrap{
+    display: block;
+    // position: relative;
+    // bottom: 0;
+    // left: 0;
+    // width: 100%;
+    height: 60px;
+    overflow: hidden;
+    background:-webkit-gradient(linear, 0 0, 0 100%, from(#64d0ed), to(#1b7fb1));
+    background:-moz-linear-gradient(top, #64d0ed, #1b7fb1);
+    border-bottom: 1px solid #404040;
+    cursor: pointer;
+    .preview-btn{
+      position: relative;
+      top: 12px;
+      width: 27px;
+      height: 34px;
+      margin: 0 auto;
+      background-position: 0 -32px;
+    }
   }
 }

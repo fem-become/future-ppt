@@ -1,12 +1,13 @@
 <section class="content control">
-    <div class="showing-ppt" id="J_ShowingPPT">
+    <div class="showing-ppt style-rotate" id="J_ShowingPPT">
         <ul id="J_PPPTBox">
         </ul>
     </div>
 </section>
 <script>
     KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
-        var minShowTpl = '<li class="J_PPTItem" data-c="{{index}}" style="left:{{left}}px">\
+        var $ = S.all;
+        var minShowTpl = '<li class="" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -26,6 +27,7 @@
         MS.startup(function (data) {
             var app = this;
             NS.toggleNav('setting');
+
             begin();
 
         });
@@ -43,6 +45,7 @@
             g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
             cLen = g_pptdata.length;
 
+            // rotateTo(0, cLen)
             renderPPT();
 
             eventHanlde();
@@ -61,18 +64,15 @@
             })
 
             var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
-            $('#J_PPPTBox').on(doubleTap, function(e){
-                var target = $(e.target);
-                console.log(target)
-                if( target.hasClass('J_PPTItem') || (target=target.parent('J_PPTItem')) ){
-                    if(target.css('-webkit-transform') == 'none'){
-                        var _x = e.offsetX, _y = e.offsetY;
-                        target.css('-webkit-transform', 'scale(2)');
-                        target.css('-webkit-transform-origin', _x + ' ' + _y);
-                    }
-                    else{
-                        target.css('-webkit-transform', '');
-                    }
+            $('#J_PPPTBox').delegate(doubleTap,'.J_PPTItem', function(e){
+                var target = $(e.currentTarget);
+                if(target.css('-webkit-transform') == 'none'){
+                    var _x = e.offsetX, _y = e.offsetY;
+                    target.css('-webkit-transform', 'scale(2)');
+                    target.css('-webkit-transform-origin', _x + ' ' + _y);
+                }
+                else{
+                    target.css('-webkit-transform', '');
                 }
             })
         }
@@ -84,7 +84,7 @@
                     $('#J_PPPTBox').append( $( TT(minShowTpl).render({
                         data: item
                         ,index: idx
-                        ,left: idx * 1000
+                        // ,left: idx * 950
                     }) ) )
                 })
 
@@ -93,17 +93,48 @@
         }
 
         var cLeft = 0, cIdx = 0, cLen = 0;
+        var playStyle = 'rotate';
+
         function _prev(){
             if( cIdx == 0) return false;
-            $('#J_PPPTBox').css('left', (cLeft+=950+50) + 'px' );
+            var items = $('#J_PPPTBox').children();
+            switch(playStyle){
+                case 'rotate':{
+                    rotateTo(cIdx,cLen,'prev');
+                }
+            }
             --cIdx;
         }
         function _next(){
             if( cIdx == cLen-1) return false;
-            $('#J_PPPTBox').css('left', (cLeft-=950+50) + 'px' );
+            var items = $('#J_PPPTBox').children();
+            switch(playStyle){
+                case 'rotate':{
+                    rotateTo(cIdx,cLen,'next');
+                }
+            }
             ++cIdx;
         }
 
+        //特殊效果：旋转
+        function rotateTo(cIdx, len, type){
+            // debugger
+            var items = $('#J_PPPTBox').children();
+            var prev = (cIdx-1>=0) && items[cIdx-1] //item 方法不可用
+                    ,prev2 = (cIdx-2>=0) && items[cIdx-2]
+                    ,cur = items[cIdx]
+                    ,next = (cIdx+1<len) && items[cIdx+1]
+                    ,next2 = (cIdx+2<len) && items[cIdx+2]
+                    ;
 
+            if(type == 'prev'){
+                prev&&(prev.className = 'cur transform-origin-top-right');
+                cur.className = 'next transform-origin-top-left';
+            }
+            else{
+                cur.className = 'prev transform-origin-top-right';
+                next&&(next.className = 'cur transform-origin-top-left');
+            }
+        }
     });
 </script>
