@@ -81,6 +81,16 @@ body {
     height: 30px;
     background: #181818;
 }
+.setting-btn {
+    display: none;
+    width: 24px;
+    height: 24px;
+    background: url("../images/edit-page.png") no-repeat 100% 0;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    margin: -12px 0 0;
+}
 
 .MS-con {
     position: relative;
