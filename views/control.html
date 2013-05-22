@@ -1,16 +1,11 @@
 <section class="content control">
 
 <div>Client: <em id="J_ClientStatus"></em></div>
-<div id="J_Debug"></div>
-<% if(1 || isMobile){ %>
-    <div id="control">
+    <div id="control" style="display: none">
         <div id="J_Prev" class="prev_btn"></div>
         <div id="J_Pointer" class="pointer"></div>
         <div id="J_Next" class="next_btn"></div>
     </div>
-<% }else{ %>
-<div id="J_ScreenPointer" style="display:none; background: #f00; width: 20px; height: 20px; border-radius: 10px;"></div>
-<% } %>
 </section>
 
         <script>
@@ -19,7 +14,43 @@
 
                 MS.startup(function (data) {
                     var app = this;
-                    NS.toggleNav('logo');
+                    NS.toggleNav('back');
+
+                    var controlEl = D.get('#control');
+                    var timer;
+                    function setHeight(){
+                        D.hide(controlEl);
+                        timer && clearTimeout(timer);
+                        timer = setTimeout(function(){
+                            var navEl = D.get('#MS-nav');
+                            var msContentEl = D.get('#J_MSContent');
+                            var msContentDivEl = D.children(msContentEl, 'div');
+                            var height = D.viewportHeight() - D.height(navEl);
+                            var width = D.viewportWidth();
+                            D.css(msContentEl, {
+                                'height': height,
+                                'width': width
+                            });
+                            D.css(msContentDivEl, {
+                                'height': height,
+                                'width': width
+                            });
+
+                            D.css('#MS', {
+                                'height': D.viewportHeight() - 20,
+                                'overflow': 'hidden'
+                            });
+                            D.css(controlEl, {
+                                'display': 'block',
+                                'position': 'fixed',
+                                'top': (D.viewportHeight() - D.height(controlEl)) / 2,
+                                'left': (D.viewportWidth() - D.width(controlEl)) / 2,
+                                'margin': 0
+                            });
+                        }, 100);
+                    }
+
+                    setHeight();
 
                     if(mobile == 'true'){
                         window.socket.emit("send", {
@@ -27,6 +58,8 @@
                             act: "pair",
                             page: app.get('viewpath')
                         });
+
+                        window.addEventListener("orientationchange", setHeight );
 
 
                         var start = false,

@@ -60,6 +60,19 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
     var curPage = app.get('viewpath');
 
+    var navEl = D.get('#MS-nav');
+    var msContentEl = D.get('#J_MSContent');
+    var msContentDivEl = D.children(msContentEl, 'div');
+    var timer;
+    function resize(){
+        timer && clearTimeout(timer);
+        timer = setTimeout(function(){
+            var height = D.viewportHeight() - D.height(navEl);
+            D.css(msContentEl, 'height', height);
+            D.css(msContentDivEl, 'height', height);
+        }, 100);
+    }
+
     if(mobile == 'true'){
         S.log('this is mobile client.');
 
@@ -76,19 +89,23 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
                 page: app.get('viewpath')
             });
         });
-    }else{
-        var navEl = D.get('#MS-nav');
-        var msContentEl = D.get('#J_MSContent');
-        var msContentDivEl = D.children(msContentEl, 'div');
-        var timer;
-        function resize(){
-            timer && clearTimeout(timer);
-            timer = setTimeout(function(){
-                var height = D.viewportHeight() - D.height(navEl);
-                D.css(msContentEl, 'height', height);
-                D.css(msContentDivEl, 'height', height);
-            }, 100);
+
+        function hideAddressBar()
+        {
+//            if(!window.location.hash)
+//            {
+                if(document.height < window.outerHeight)
+                {
+                    document.body.style.height = (window.outerHeight + 50) + 'px';
+                }
+
+                setTimeout( function(){ window.scrollTo(0, 1); }, 50 );
+//            }
         }
+
+        window.addEventListener("load", function(){ if(!window.pageYOffset){ hideAddressBar(); } } );
+        window.addEventListener("orientationchange", hideAddressBar );
+    }else{
 
         resize();
 
