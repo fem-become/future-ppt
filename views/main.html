@@ -1,5 +1,5 @@
 <section class="content main">
-    <div class="ppts">
+    <div id="J_PPTs" class="ppts">
         <a href="add_ppt.html" class="ppt-image first">
             <img src="./assets/images/add-ppt.png">
         </a>
@@ -20,14 +20,14 @@
     var isMobile = '<%= isMobile %>';
 
     KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
+        var $ = S.all;
 
         MS.startup(function (data) {
             NS.toggleNav('logo');
             var qrImgEl = D.get('#J_QRCodeImg');
 //            var key = S.now() + '' + S.guid();
 //            var key = 1;
-            var url = location.href + '&key=' + window.key + '&mobile=true';
-            qrImgEl.src = 'http://qr.liantu.com/api.php?text=' + encodeURIComponent(url);
+            qrImgEl.src = window.qrUrl;
             D.html('#J_PinCode', key);
         });
 
@@ -36,7 +36,26 @@
         });
 
         MS.includeOnce(function () {
-            // 注册 includeOnce
+            var $win  = $(window),
+                $PPTs = $('#J_PPTs'),
+                $MSContent = $('#J_MSContent'),
+                $MSPal = $('.MS-pal', $MSContent);
+
+            var setWidth = function(w) {
+                $MSContent.width(w).one('div').width(w);
+                $MSPal.width(w);
+            };
+
+            window.addEventListener("orientationchange", function() {
+                var winWidth = $win.width();
+                if (winWidth > 320) {
+                    setWidth(440);
+                    $('a', $PPTs).css('float', 'left');
+                } else {
+                    setWidth(320);
+                    $('a', $PPTs).css('float', 'none');
+                }
+            });
         });
 
 //        MS.destory(function () {

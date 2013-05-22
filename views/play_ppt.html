@@ -1,24 +1,29 @@
 <section class="content control">
-  <div class="showing-ppt style-rotate" id="J_ShowingPPT">
-
-  <div id="viewStage">
-  <div id="cube1" class="cube" ><!-- 1526 -->
-    <div class="facefront fb">1</div>
-    <div class="faceback fb">2</div>
-    <div class="facetop tb">5</div>
-    <div class="facebottom tb">6</div>
-  </div>
-</div>
-  <ul id="J_PPPTBox" style="display: none;">
-  </ul>
     <div class="showing-ppt style-rotate" id="J_ShowingPPT">
-        <ul id="J_PPPTBox">
+
+        <div id="viewStage">
+            <div id="cube1" class="cube" ><!-- 1526 -->
+                <div class="facefront fb">1</div>
+                <div class="faceback fb">2</div>
+                <div class="facetop tb">5</div>
+                <div class="facebottom tb">6</div>
+            </div>
+        </div>
+        <ul id="J_PPPTBox" style="display: none;">
         </ul>
+        <div class="showing-ppt style-rotate" id="J_ShowingPPT">
+            <ul id="J_PPPTBox">
+            </ul>
+        </div>
     </div>
-</div>
     <div id="J_ControlArea" class="control-ppt-area">
-        <div class="enter-control"></div>
-        <div class="save-ppt"></div>
+        <div id="J_EnterControlBtn" class="enter-control"></div>
+        <div id="J_SavePPTBtn" class="save-ppt"></div>
+    </div>
+    <div id="J_EnterPIN" class="enter-pin-box">
+        <form id="J_EnterPINForm" action="" method="post">
+            <input id="J_EnterPINInput" type="text" value="" placeholder="点击输入二维码" />
+        </form>
     </div>
 </section>
 <script>
@@ -50,12 +55,23 @@
             if(mobile == 'true'){
                 var controlTimer;
                 var $controlArea = $('#J_ControlArea');
-                $('#J_SettingBtn').on('click', function(e){
-                    $controlArea.slideUp();
+                $('#J_SettingBtn').on('click tap', function(e){
+                    $controlArea.show();
                     controlTimer && clearTimeout(controlTimer);
                     controlTimer = setTimeout(function(){
-                        $controlArea.slideDown();
+                        $controlArea.slideDown(.5);
                     }, 1500);
+                });
+                $('#J_EnterControlBtn').on('click tap', function(e){
+                    $('#J_EnterPIN').show();
+                });
+                $('#J_EnterPINForm').on('submit', function(e){
+                    e.preventDefault();
+                    window.socket.emit("send", {
+                        key: D.val('#J_EnterPINInput'),
+                        act: "pair",
+                        page: app.get('viewpath')
+                    });
                 });
             }
 
@@ -106,12 +122,12 @@
             })
 
             $('#J_PPPTBox').on('swipe', function(e){
-              if( e.direction == 'left'){
-                _next();
-              }
-              else if(e.direction == 'right'){
-                _prev();
-              }
+                if( e.direction == 'left'){
+                    _next();
+                }
+                else if(e.direction == 'right'){
+                    _prev();
+                }
             })
         }
 
@@ -130,76 +146,76 @@
             })
         }
 
-    var cLeft = 0, cIdx = 0, cLen = 0;
-    var playStyle = 'rotate';
+        var cLeft = 0, cIdx = 0, cLen = 0;
+        var playStyle = 'rotate';
 
-    function _prev(){
-      if( cIdx == 0) return false;
-      var items = $('#J_PPPTBox').children();
-      --cIdx;
-      switch(playStyle){
-        case 'rotate':{
-          // rotateTo(cIdx,cLen,'prev');
-          rotate2(cIdx, 'prev');
+        function _prev(){
+            if( cIdx == 0) return false;
+            var items = $('#J_PPPTBox').children();
+            --cIdx;
+            switch(playStyle){
+                case 'rotate':{
+                    // rotateTo(cIdx,cLen,'prev');
+                    rotate2(cIdx, 'prev');
+                }
+            }
         }
-      }
-    }
-    function _next(){
-      if( cIdx == cLen-1) return false;
-      var items = $('#J_PPPTBox').children();
-      ++cIdx;
-      switch(playStyle){
-        case 'rotate':{
-          // rotateTo(cIdx,cLen,'next');
-          rotate2(cIdx, 'next');
+        function _next(){
+            if( cIdx == cLen-1) return false;
+            var items = $('#J_PPPTBox').children();
+            ++cIdx;
+            switch(playStyle){
+                case 'rotate':{
+                    // rotateTo(cIdx,cLen,'next');
+                    rotate2(cIdx, 'next');
+                }
+            }
         }
-      }
-    }
 
-    function rotate2(cIdx, type){
-      // debugger
-      renderPPTToCube(cIdx);
-      // if( type == 'prev'){
-        $('#cube1').css('-webkit-transform', 'rotateX(' + 90 * cIdx + 'deg)')
-      // }
-      // else {
+        function rotate2(cIdx, type){
+            // debugger
+            renderPPTToCube(cIdx);
+            // if( type == 'prev'){
+            $('#cube1').css('-webkit-transform', 'rotateX(' + 90 * cIdx + 'deg)')
+            // }
+            // else {
 
-      // }
-    }
-    renderPPTToCube(0);
-    function renderPPTToCube(cIdx){
-      KISSY.use('template', function(S, TT){
-        var items = $('#cube1').children();
-        items = [items.item(0), items.item(3), items.item(1), items.item(2)];
+            // }
+        }
+        renderPPTToCube(0);
+        function renderPPTToCube(cIdx){
+            KISSY.use('template', function(S, TT){
+                var items = $('#cube1').children();
+                items = [items.item(0), items.item(3), items.item(1), items.item(2)];
 
-        // items
-        items[cIdx%4].html( TT(minShowTpl).render({
-          data: g_pptdata[cIdx]
-          ,index: cIdx
-        }) )
-      });
-    }
+                // items
+                items[cIdx%4].html( TT(minShowTpl).render({
+                    data: g_pptdata[cIdx]
+                    ,index: cIdx
+                }) )
+            });
+        }
 
-    //特殊效果：旋转
-    function rotateTo(cIdx, len, type){
-      // debugger
-      var items = $('#J_PPPTBox').children();
-      var prev = (cIdx-1>=0) && items[cIdx-1] //item 方法不可用
-      ,prev2 = (cIdx-2>=0) && items[cIdx-2]
-      ,cur = items[cIdx]
-      ,next = (cIdx+1<len) && items[cIdx+1]
-      ,next2 = (cIdx+2<len) && items[cIdx+2]
-      ;
+        //特殊效果：旋转
+        function rotateTo(cIdx, len, type){
+            // debugger
+            var items = $('#J_PPPTBox').children();
+            var prev = (cIdx-1>=0) && items[cIdx-1] //item 方法不可用
+                    ,prev2 = (cIdx-2>=0) && items[cIdx-2]
+                    ,cur = items[cIdx]
+                    ,next = (cIdx+1<len) && items[cIdx+1]
+                    ,next2 = (cIdx+2<len) && items[cIdx+2]
+                    ;
 
-      if(type == 'prev'){
-        prev&&(prev.className = 'cur transform-origin-top-right');
-        cur.className = 'next transform-origin-top-left';
-      }
-      else{
-        cur.className = 'prev transform-origin-top-right';
-        next&&(next.className = 'cur transform-origin-top-left');
-      }
-    }
-    
-});
+            if(type == 'prev'){
+                prev&&(prev.className = 'cur transform-origin-top-right');
+                cur.className = 'next transform-origin-top-left';
+            }
+            else{
+                cur.className = 'prev transform-origin-top-right';
+                next&&(next.className = 'cur transform-origin-top-left');
+            }
+        }
+
+    });
 </script>

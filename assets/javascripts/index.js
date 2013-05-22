@@ -23,6 +23,9 @@ var app = {},
 
     S.log('Key is ' + window.key);
 
+    var url = location.href + '&key=' + window.key + '&mobile=true';
+    window.qrUrl = 'http://qr.liantu.com/api.php?text=' + encodeURIComponent(url);
+
 })(KISSY);
 
 KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
@@ -126,6 +129,8 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
         socket.on('get_response', function (data) {
             var combine = data.key + '_' + data.act;
             var d = data.data;
+
+            console.log(data);
 
             switch (combine) {
                 case key + '_pair':

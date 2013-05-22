@@ -83,8 +83,23 @@
         MS.startup(function (data) {
             var app = this;
             NS.toggleNav('back');
+            D.attr('#J_BackBtn', 'href', 'add_ppt.html');
             begin();
 
+            $('#J_Tdc').on('click', function(e){
+                e.halt();
+                D.remove('#J_QRImgBox');
+                D.remove('#J_QRImgBoxMask');
+                var content = D.get('.edit-panel', D.get('#J_MSContent'));
+                var mask = D.create('<div id="J_QRImgBoxMask" class="qr-img-box-mask"></div>');
+                D.css(mask, {
+                    width: D.viewportWidth(),
+                    height: D.viewportHeight()
+                });
+                D.append(mask, content);
+                var box = D.create('<div id="J_QRImgBox" class="qr-img-box"><img src="' + window.qrUrl + '" width="300" height="300" ><p>PIN码：' + window.key + '</p></div>');
+                D.append(box, content);
+            });
         });
 
         MS.teardown(function () {
@@ -96,7 +111,7 @@
         });
 
 
-var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}}];
+        var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}}];
 
         function begin(){
             //读本地存储
@@ -117,7 +132,7 @@ var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"m
 
                 // })
 
-                
+
                 $('#J_MinShow').delegate(clickEventName, 'li',  function(e){
                     var target = $(e.currentTarget);
                     //新增一个ppt页
@@ -137,15 +152,15 @@ var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"m
 
                 var minShowLeft = 0;
                 $('#J_MinShow').on('swipe', function(e){
-                  var maxMinShowLeft = $('#J_MinShow').width();
-                  if( e.direction == 'left'){
-                    minShowLeft -= e.distance;
-                  }
-                  else if(e.direction == 'right'){
-                    minShowLeft += e.distance;
-                  }
-                  // if( minShow >)
-                  $('#J_MinShow').css('left', minShowLeft + 'px');
+                    var maxMinShowLeft = $('#J_MinShow').width();
+                    if( e.direction == 'left'){
+                        minShowLeft -= e.distance;
+                    }
+                    else if(e.direction == 'right'){
+                        minShowLeft += e.distance;
+                    }
+                    // if( minShow >)
+                    $('#J_MinShow').css('left', minShowLeft + 'px');
                 })
 
                 //播放
@@ -221,6 +236,6 @@ var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"主标题一"},"desc":{"m
 
             });
         }
-});
+    });
 
 </script>
