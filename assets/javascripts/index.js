@@ -38,7 +38,9 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
         pageCache: true,
         webkitOptimize: true,
         positionMemory: true,
-        animWrapperAutoHeightSetting: true
+        animWrapperAutoHeightSetting: true,
+        containerHeighTimmer: false,
+        hideURIbar: true
     });
 
     NS = app;

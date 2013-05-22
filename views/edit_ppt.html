@@ -1,4 +1,4 @@
-Ôªø<section>
+?<section>
     <div class="edit-panel">
         <div class="opacity-bg"></div>
         <div class="top-ctl">
@@ -8,9 +8,9 @@
                 <div class="setting" id="J_Setting"></div>
                 <div class="setting-detail" id="J_SettingDetail" style="display: none;">
                     <ul>
-                        <li>‰øùÂ≠ò</li>
-                        <li>ÂàÜ‰∫´</li>
-                        <li>Âà†Èô§</li>
+                        <li>±£¥Ê</li>
+                        <li>∑÷œÌ</li>
+                        <li>…æ≥˝</li>
                     </ul>
                     <s></s>
                 </div>
@@ -30,10 +30,10 @@
             <div class="preview-btn"></div>
         </div>
         <div class="other-ctl">
-            <a href="#" class="save J_Save">‰øùÂ≠ò</a>
-            <a href="#" class="link J_Link">ÈìæÊé•</a>
-            <a href="play_ppt.html" class="play" id="J_Play">Êí≠Êîæ</a>
-            <a href="#" class="tdc" id="J_Tdc">‰∫åÁª¥Á†Å</a>
+            <a href="#" class="save J_Save">±£¥Ê</a>
+            <a href="#" class="link J_Link">¡¥Ω”</a>
+            <a href="play_ppt.html" class="play" id="J_Play">≤•∑≈</a>
+            <a href="#" class="tdc" id="J_Tdc">∂˛Œ¨¬Î</a>
         </div>
     </div>
 
@@ -42,172 +42,171 @@
         </ul>
     </div> -->
 </section>
-<script src=""></script>
 <script>
-KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+    KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
 
-  var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
+        var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
                       <input class="J_TitleEdit" type="text" value="{{data.title.text}}" \
-                      placeholder="ÂçïÂáªÊ≠§Â§ÑÊ∑ªÂä†Ê†áÈ¢ò"/>\
+                      placeholder="µ•ª˜¥À¥¶ÃÌº”±ÍÃ‚"/>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
-                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="ÂçïÂáªÊ≠§Â§ÑÊ∑ªÂä†ÂâØÊ†áÈ¢ò"/>\
+                      <input class="J_DescEdit" type="text" value="{{data.desc.text}}" placeholder="µ•ª˜¥À¥¶ÃÌº”∏±±ÍÃ‚"/>\
                     </div>';
-  var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
+        var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
                       {{#else}}\
-                      ÂçïÂáªÊ≠§Â§ÑÊ∑ªÂä†Ê†áÈ¢ò\
+                      µ•ª˜¥À¥¶ÃÌº”±ÍÃ‚\
                       {{/if}}\
                       </div>\
                       <div class="desc" style="margin: {{data.desc.margin}}">\
                       {{#if data.desc.text}}\
                       {{data.desc.text}}</div>\
                       {{#else}}\
-                      ÂçïÂáªÊ≠§Â§ÑÊ∑ªÂä†ÂâØÊ†áÈ¢ò\
+                      µ•ª˜¥À¥¶ÃÌº”∏±±ÍÃ‚\
                       {{/if}}\
-                    </li>'
-    var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
+                    </li>';
+        var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
                   <span>{{data.title.text}}</span>\
                 </div>\
                 <div class="desc" style="margin: {{data.desc.offset}}">\
                   <span>{{data.desc.text}}</span>\
                 </div>';
-    
-    var currentEditingIdx = 0;
 
-    var editingPage = $('#J_EditingPage');
+        var currentEditingIdx = 0;
 
-    var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
-    MS.startup(function (data) {
-        var app = this;
-        NS.toggleNav('back');
-        begin();
+        var editingPage = $('#J_EditingPage');
 
-    });
+        var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
+        MS.startup(function (data) {
+            var app = this;
+            NS.toggleNav('back');
+            begin();
 
-    MS.teardown(function () {
-        // Ê≥®ÂÜå teardown
-    });
-
-    MS.includeOnce(function () {
-        // Ê≥®ÂÜå includeOnce
-    });
-
-var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"‰∏ªÊ†áÈ¢ò‰∏Ä"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"‰∏ªÊ†áÈ¢ò‰∫å"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
-
-function begin(){
-  //ËØªÊú¨Âú∞Â≠òÂÇ®
-  if( localStorage.getItem('pptData') ){
-    g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
-  }
-
-  KISSY.use('template', function(S, TT){
-    showEditingItemByIdx(currentEditingIdx);
-
-    //ËøîÂõû
-    // $('#J_GoBack').on(clickEventName, function(){
-    //   window.history.go(-1);
-    // })
-  
-    //ËÆæÁΩÆ
-    // $('#J_Setting').on(clickEventName, function(){
-
-    // })
-    
-  
-    $('#J_MinShow').on(clickEventName,  function(e){
-      var target = $(e.target);
-
-      //Êñ∞Â¢û‰∏Ä‰∏™pptÈ°µ
-      if( target.hasClass('J_AddBtn') ){
-        addOnePage();
-      }
-
-      //Áº©Áï•Âõæ ÁÇπÂáª‰∫ã‰ª∂
-      else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
-        var idx = target.attr('data-c');
-        saveEditingItem(currentEditingIdx);
-        if( idx != undefined ){
-          currentEditingIdx = parseInt(idx);
-          showEditingItemByIdx(currentEditingIdx);
-        }
-      }
-    })
-
-    //Êí≠Êîæ
-    $('#J_Play').on(clickEventName, function(e){
-      previewPPT();
-    })
-
-    //È¢ÑËßà
-    $('#J_PreviewBtn').on(clickEventName, function(){
-      previewPPT();
-    })
-
-    //-----------------------------------------------actions
-
-    //Ê∑ªÂä†‰∏ÄÈ°µppt
-    function addOnePage(){
-      g_pptdata.push({
-        title: {
-          margin: '20% 10% 0',
-          text: ''
-        },
-        desc: {
-          margin: '2% 10% 0',
-          text: ''
-        }
-      });
-
-      //render minShow and editing this new page
-      renderMinShow();
-      currentEditingIdx = g_pptdata.length - 1;
-      showEditingItemByIdx(currentEditingIdx);
-    }
-
-    //ÁÇπÂáªÈ¢ÑËßà
-    function previewPPT(){
-      saveEditingItem(currentEditingIdx);
-      localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
-    }
-
-    //init render minShow
-    renderMinShow();
-
-    //Ê∏≤Êüì
-    function renderMinShow(){
-      var minShow = $('#J_MinShow');
-      var _html = '';
-      S.each(g_pptdata, function(item, idx){
-
-        _html += TT(minShowTpl).render({
-          data: item,
-          index: idx
         });
-      })
 
-      minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
-    }
+        MS.teardown(function () {
+            // ◊¢≤· teardown
+        });
 
-    //ÊòæÁ§∫ÁºñËæëidxÈ°µ pptÂ§ßÂõæ
-    function showEditingItemByIdx(idx){
-      editingPage.html(TT(editingTpl).render({
-        data: g_pptdata[idx]
-      }));
-    }
+        MS.includeOnce(function () {
+            // ◊¢≤· includeOnce
+        });
 
-    //‰øùÂ≠òÊ≠£Âú®ÁºñËæëÁöÑpptÈ°µ
-    function saveEditingItem(idx){
-      var box = $('#J_EditingPage');
-      g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
-      g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
+        var g_pptdata = [{"title":{"margin":"1% 10% 0","text":"÷˜±ÍÃ‚“ª"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"÷˜±ÍÃ‚∂˛"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"1% 10% 0","text":"3333"},"desc":{"margin":"2% 10% 0","text":"333333"}}];
 
-      renderMinShow();
-    }
+        function begin(){
+            //∂¡±æµÿ¥Ê¥¢
+            if( localStorage.getItem('pptData') ){
+                g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+            }
 
-  });
-}
-});
+            KISSY.use('template', function(S, TT){
+                showEditingItemByIdx(currentEditingIdx);
+
+                //∑µªÿ
+                // $('#J_GoBack').on(clickEventName, function(){
+                //   window.history.go(-1);
+                // })
+
+                //…Ë÷√
+                // $('#J_Setting').on(clickEventName, function(){
+
+                // })
+
+
+                $('#J_MinShow').on(clickEventName,  function(e){
+                    var target = $(e.target);
+
+                    //–¬‘ˆ“ª∏ˆppt“≥
+                    if( target.hasClass('J_AddBtn') ){
+                        addOnePage();
+                    }
+
+                    //Àı¬‘Õº µ„ª˜ ¬º˛
+                    else if( target.hasClass('J_MinItem') || (target = target.parent('li')).hasClass('J_MinItem') ){
+                        var idx = target.attr('data-c');
+                        saveEditingItem(currentEditingIdx);
+                        if( idx != undefined ){
+                            currentEditingIdx = parseInt(idx);
+                            showEditingItemByIdx(currentEditingIdx);
+                        }
+                    }
+                })
+
+                //≤•∑≈
+                $('#J_Play').on(clickEventName, function(e){
+                    previewPPT();
+                })
+
+                //‘§¿¿
+                $('#J_PreviewBtn').on(clickEventName, function(){
+                    previewPPT();
+                })
+
+                //-----------------------------------------------actions
+
+                //ÃÌº”“ª“≥ppt
+                function addOnePage(){
+                    g_pptdata.push({
+                        title: {
+                            margin: '20% 10% 0',
+                            text: ''
+                        },
+                        desc: {
+                            margin: '2% 10% 0',
+                            text: ''
+                        }
+                    });
+
+                    //render minShow and editing this new page
+                    renderMinShow();
+                    currentEditingIdx = g_pptdata.length - 1;
+                    showEditingItemByIdx(currentEditingIdx);
+                }
+
+                //µ„ª˜‘§¿¿
+                function previewPPT(){
+                    saveEditingItem(currentEditingIdx);
+                    localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
+                }
+
+                //init render minShow
+                renderMinShow();
+
+                //‰÷»æ
+                function renderMinShow(){
+                    var minShow = $('#J_MinShow');
+                    var _html = '';
+                    S.each(g_pptdata, function(item, idx){
+
+                        _html += TT(minShowTpl).render({
+                            data: item,
+                            index: idx
+                        });
+                    })
+
+                    minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
+                }
+
+                //œ‘ æ±‡º≠idx“≥ ppt¥ÛÕº
+                function showEditingItemByIdx(idx){
+                    editingPage.html(TT(editingTpl).render({
+                        data: g_pptdata[idx]
+                    }));
+                }
+
+                //±£¥Ê’˝‘⁄±‡º≠µƒppt“≥
+                function saveEditingItem(idx){
+                    var box = $('#J_EditingPage');
+                    g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
+                    g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
+
+                    renderMinShow();
+                }
+
+            });
+        }
+    });
 </script>
