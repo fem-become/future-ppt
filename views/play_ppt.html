@@ -1,0 +1,110 @@
+<section class="content control">
+  <div class="showing-ppt" id="J_ShowingPPT">
+  <ul id="J_PPPTBox">
+  </ul>
+</div>
+</section>
+<script>
+KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+  var minShowTpl = '<li class="J_PPTItem" data-c="{{index}}" style="left:{{left}}px">\
+                      <div class="title" style="margin: {{data.title.margin}}">\
+                      {{#if data.title.text}}\
+                      {{data.title.text}}\
+                      {{#else}}\
+                      单击此处添加标题\
+                      {{/if}}\
+                      </div>\
+                      <div class="desc" style="margin: {{data.desc.margin}}">\
+                      {{#if data.desc.text}}\
+                      {{data.desc.text}}</div>\
+                      {{#else}}\
+                      单击此处添加副标题\
+                      {{/if}}\
+                    </li>';
+
+
+  MS.startup(function (data) {
+        var app = this;
+        NS.toggleNav('back');
+
+        begin();
+
+    });
+
+    MS.teardown(function () {
+        // 注册 teardown
+    });
+
+    MS.includeOnce(function () {
+        // 注册 includeOnce
+    });
+
+    var g_pptdata = [];
+    function begin(){
+      g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+      cLen = g_pptdata.length;
+
+      renderPPT();
+      
+      eventHanlde();
+    }
+
+
+    function eventHanlde(){
+      //光标移动 左、右
+      $(document).on('keyup', function(e){
+        if( e.keyCode == 37){
+          _prev();
+        }
+        else if( e.keyCode == 39){
+          _next();
+        }
+      })
+
+      var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
+      $('#J_PPPTBox').on(doubleTap, function(e){
+        var target = $(e.target);
+          console.log(target)
+        if( target.hasClass('J_PPTItem') || (target=target.parent('J_PPTItem')) ){
+          if(target.css('-webkit-transform') == 'none'){
+            var _x = e.offsetX, _y = e.offsetY;
+            target.css('-webkit-transform', 'scale(2)');
+            target.css('-webkit-transform-origin', _x + ' ' + _y);
+          }
+          else{
+            target.css('-webkit-transform', '');
+          }
+        }
+      })
+    }
+
+    //渲染ppt
+    function renderPPT(){
+      KISSY.use('template', function(S, TT){
+        S.each(g_pptdata, function(item, idx){
+          $('#J_PPPTBox').append( $( TT(minShowTpl).render({
+            data: item
+            ,index: idx
+            ,left: idx * 1000
+          }) ) )
+        })
+
+        $('#J_PPPTBox').css('width', g_pptdata.length * 950 + 'px');
+      })
+    }
+
+    var cLeft = 0, cIdx = 0, cLen = 0;
+    function _prev(){
+      if( cIdx == 0) return false;
+      $('#J_PPPTBox').css('left', (cLeft+=950+50) + 'px' );
+      --cIdx;
+    }
+    function _next(){
+      if( cIdx == cLen-1) return false;
+      $('#J_PPPTBox').css('left', (cLeft-=950+50) + 'px' );
+      ++cIdx;
+    }
+
+
+});
+</script>

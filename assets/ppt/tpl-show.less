@@ -1,0 +1,73 @@
+/**
+  * ppt 的模板展示
+  */
+.easysharing-tpl-show{
+  margin-top: 30px;
+  left: 0;
+  top: 0;
+  .opacity-bg{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 120%;
+    background-color: black;
+    opacity: 0.3;
+    z-index: -1;
+  }
+  .box-detail{
+    position: relative;
+    margin: 0 auto;
+  }
+  .box-item{ //w: 200px h:150px;
+    float: left;
+    position: relative;
+    .box-item-i{
+      margin: 5px;
+      border-width: 2px;
+      border-style: solid;
+      height: 90%;
+    }
+    .title{
+      font-weight: bolder;
+    }
+    .desc{
+      
+    }
+  }
+  .right-item{
+    margin-right: 0;
+  }
+}
+@media screen and (min-width: 980px){ 
+  .back{
+    display: none;
+  }
+  .logo{
+    display: block;
+  }
+  .easysharing-tpl-show{
+    .box-item{
+      width: 295px;
+      height: 220px;
+    }
+  }
+}
+
+@media screen and (max-width: 980px){
+  .back{
+    display: block;
+  }
+  .logo{
+    display: none;
+  }
+  .easysharing-tpl-show{
+    .box-item{
+      width: 150px;
+      height: 100px;
+      -webkit-text-size-adjust:none;
+      font-size: 8px;
+    }
+
+  }
+}
