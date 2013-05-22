@@ -12,8 +12,9 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var cons = require('consolidate');
 var mobileDetect = require('./libs/mobile-detect');
+var config = require('./config');
 
-server.listen(80);
+server.listen(config.port);
 
 app.enable('trust proxy');
 
