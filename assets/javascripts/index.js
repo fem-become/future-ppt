@@ -60,23 +60,6 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
     var curPage = app.get('viewpath');
 
-    var navEl = D.get('#MS-nav');
-    var msContentEl = D.get('#J_MSContent');
-    var msContentDivEl = D.children(msContentEl, 'div');
-    var timer;
-    function resize(){
-        timer && clearTimeout(timer);
-        timer = setTimeout(function(){
-            var height = D.viewportHeight() - D.height(navEl);
-            D.css(msContentEl, 'height', height);
-            D.css(msContentDivEl, 'height', height);
-        }, 100);
-    }
-
-    resize();
-
-    E.on(window, 'resize', resize);
-
     if(mobile == 'true'){
         S.log('this is mobile client.');
 
@@ -94,6 +77,23 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
             });
         });
     }else{
+        var navEl = D.get('#MS-nav');
+        var msContentEl = D.get('#J_MSContent');
+        var msContentDivEl = D.children(msContentEl, 'div');
+        var timer;
+        function resize(){
+            timer && clearTimeout(timer);
+            timer = setTimeout(function(){
+                var height = D.viewportHeight() - D.height(navEl);
+                D.css(msContentEl, 'height', height);
+                D.css(msContentDivEl, 'height', height);
+            }, 100);
+        }
+
+        resize();
+
+        E.on(window, 'resize', resize);
+
         S.log('start to listen to socket.');
         socket.on('get_response', function (data) {
             var combine = data.key + '_' + data.act;
