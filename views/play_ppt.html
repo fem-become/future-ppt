@@ -11,10 +11,6 @@
 </div>
   <ul id="J_PPPTBox" style="display: none;">
   </ul>
-    <div class="showing-ppt style-rotate" id="J_ShowingPPT">
-        <ul id="J_PPPTBox">
-        </ul>
-    </div>
 </div>
     <div id="J_ControlArea" class="control-ppt-area">
         <div class="enter-control"></div>
@@ -24,7 +20,7 @@
 <script>
     KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
         var $ = S.all;
-        var minShowTpl = '<li class="" data-c="{{index}}">\
+        var minShowTpl = '\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -38,7 +34,7 @@
                       {{#else}}\
                       单击此处添加副标题\
                       {{/if}}\
-                    </li>';
+                    ';
 
 
         MS.startup(function (data) {
@@ -105,11 +101,11 @@
                 }
             })
 
-            $('#J_PPPTBox').on('swipe', function(e){
-              if( e.direction == 'left'){
+            $('#cube1').on('swipe', function(e){
+              if( e.direction == 'up'){
                 _next();
               }
-              else if(e.direction == 'right'){
+              else if(e.direction == 'down'){
                 _prev();
               }
             })
@@ -134,7 +130,10 @@
     var playStyle = 'rotate';
 
     function _prev(){
-      if( cIdx == 0) return false;
+      if( cIdx == 0) {
+        alert('已经到达第一页')
+        return false;
+      }
       var items = $('#J_PPPTBox').children();
       --cIdx;
       switch(playStyle){
@@ -145,7 +144,10 @@
       }
     }
     function _next(){
-      if( cIdx == cLen-1) return false;
+      if( cIdx == cLen-1){
+        alert('已经到达第一页');
+        return false;
+      } 
       var items = $('#J_PPPTBox').children();
       ++cIdx;
       switch(playStyle){
