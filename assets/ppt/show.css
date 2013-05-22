@@ -1,54 +1,24 @@
 /**
   * ppt show's style
   */
-.easy-sharing-box {
-  margin-top: 30px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 99999;
-}
-.easy-sharing-box .opacity-bg {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 120%;
-  background-color: black;
-  opacity: 0.3;
-  z-index: -1;
-}
-.easy-sharing-box .box-detail {
-  position: relative;
-  width: 300px;
-  height: 100%;
+.content {
   margin: 0 auto;
 }
-.easy-sharing-box .box-item {
-  float: left;
-  position: relative;
-  width: 150px;
-  height: 100px;
+@media screen and (max-width: 980px) {
+  .header,
+  .content,
+  .crumbs {
+    width: 300px;
+  }
 }
-.easy-sharing-box .box-item .box-item-i {
-  margin: 5px;
-  border-width: 2px;
-  border-style: solid;
-  height: 90%;
-}
-.easy-sharing-box .box-item .title {
-  font-size: 12px;
-  font-weight: bolder;
-}
-.easy-sharing-box .right-item {
-  margin-right: 0;
+@media screen and (min-width: 980px) {
+  .header,
+  .content,
+  .crumbs {
+    width: 950px;
+  }
 }
 /*slide 特效*/
-.box-detail {
-  overflow-x: hidden;
-  overflow-y: visible;
-}
 .box-detail .scroller {
   -webkit-transition: 1s all ease;
 }
@@ -62,64 +32,68 @@
   background-color: #666;
 }
 /**
-  * ppt playing
+  * ppt 的模板展示
   */
-.ppt-play-box {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
+.easysharing-tpl-show {
+  margin-top: 30px;
+  left: 0;
+  top: 0;
 }
-.ppt-play-box .box-item {
+.easysharing-tpl-show .opacity-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-timing-function: linear;
-  -webkit-animation-iteration-count: 200;
-  background-color: gray;
-}
-.ppt-play-box .next-item {
-  -webkit-transform: translateX(-50%) scale(0.5);
+  height: 120%;
+  background-color: black;
   opacity: 0.3;
+  z-index: -1;
 }
-.easy-sharing-box .box-detail {
-  width: auto;
+.easysharing-tpl-show .box-detail {
+  position: relative;
+  margin: 0 auto;
 }
-@-webkit-keyframes shakeHide {
-  0%,
-  100% {
-    -webkit-transform: translateX(0) scale(1);
+.easysharing-tpl-show .box-item {
+  float: left;
+  position: relative;
+}
+.easysharing-tpl-show .box-item .box-item-i {
+  margin: 5px;
+  border-width: 2px;
+  border-style: solid;
+  height: 90%;
+}
+.easysharing-tpl-show .box-item .title {
+  font-weight: bolder;
+}
+.easysharing-tpl-show .right-item {
+  margin-right: 0;
+}
+@media screen and (min-width: 980px) {
+  .back {
+    display: none;
   }
-  23% {
-    -webkit-transform: translateX(-50%) scale(0.6);
-    opacity: 0.3;
+  .logo {
+    display: block;
   }
-  27% {
-    -webkit-transform: translateX(-50%) scale(0.5);
-    opacity: 0.3;
-  }
-  50% {
-    -webkit-transform: translateX(0) scale(0.3);
-    opacity: 0;
-  }
-  73% {
-    -webkit-transform: translateX(50%) scale(0.5);
-    opacity: 0.3;
-  }
-  77% {
-    -webkit-transform: translateX(50%) scale(0.6);
-    opacity: 0.3;
+  .easysharing-tpl-show .box-item {
+    width: 295px;
+    height: 220px;
   }
 }
-.shakeHide {
-  -webkit-animation-name: shakeHide;
-  -moz-animation-name: shakeHide;
-  -o-animation-name: shakeHide;
-  animation-name: shakeHide;
-}
-@-webkit-keyframes shakeShow {
-  
+@media screen and (max-width: 980px) {
+  .back {
+    display: block;
+  }
+  .logo {
+    display: none;
+  }
+  .easysharing-tpl-show .box-item {
+    width: 150px;
+    height: 100px;
+    -webkit-text-size-adjust: none;
+    font-size: 8px;
+  }
 }
 /**
   * 选择新建ppt 还是 播放已存在ppt的入口
@@ -141,7 +115,7 @@
   background-repeat: no-repeat;
 }
 .entrance .open-choose-tpl .icon {
-  background: url(../images/add.png) no-repeat 0 0;
+  background: url(../../images/add.png) no-repeat 0 0;
   width: 60px;
   height: 60px;
   margin: 50px auto 25px;
@@ -168,7 +142,7 @@
   }
   .entrance .open-exist-ppt {
     float: right;
-    background-image: url('../images/show-existing.png');
+    background-image: url('../../images/show-existing.png');
   }
 }
 /*
@@ -262,7 +236,7 @@
 .setting,
 .preview-btn,
 .setting-detail s {
-  background-image: url(../images/edit-page.png);
+  background-image: url(../../images/edit-page.png);
   background-repeat: no-repeat;
 }
 .top-ctl {
@@ -334,7 +308,18 @@
   resize: none;
   height: 16px;
 }
+.edit-panel ::-webkit-scrollbar-track-piece {
+  background-color: #fff;
+}
+.edit-panel ::-webkit-scrollbar {
+  width: 10px;
+}
+.edit-panel ::-webkit-scrollbar-thumb {
+  background: #999;
+}
 .edit-panel .waiting-page-wrap {
+  height: 405px;
+  overflow-y: auto;
   width: 280px;
   padding: 10px;
   overflow-x: hidden;
@@ -358,17 +343,25 @@
   float: left;
   width: 110px;
   height: 83px;
+  overflow: hidden;
   background-color: white;
   margin: 5px;
 }
+.edit-panel .waiting-page li img {
+  -webkit-transform: scale(0.125);
+  -webkit-transform-origin: 0 0;
+}
 .edit-panel .waiting-page .add-btn {
   text-align: center;
-  line-height: 82px;
+  line-height: 76px;
   background-color: #3b3b3b;
   border: 1px dotted white;
   color: white;
   font-size: 60px;
   cursor: pointer;
+}
+.edit-panel .waiting-page .add-btn:hover {
+  opacity: 0.5;
 }
 .edit-panel .preview-btn-wrap {
   position: fixed;
@@ -450,6 +443,9 @@
     width: auto;
     font-size: 8px;
   }
+  .edit-panel .edit-box .waiting-page-wrap .waiting-page ul {
+    padding-left: 0;
+  }
   .edit-panel .edit-box .waiting-page-wrap li {
     margin-bottom: 10px;
     cursor: pointer;
@@ -474,43 +470,31 @@
 /*
   ppt playing
 */
+.showing-ppt,
+.showing-ppt li {
+  min-height: 300px;
+}
 .showing-ppt {
   position: relative;
-  width: 320px;
-  height: 300px;
   margin: 0 auto;
+  width: 950px;
+  overflow: hidden;
+  height: 420px;
 }
 .showing-ppt ul {
-  *zoom: 1;
-}
-.showing-ppt ul:after {
-  content: '\20';
-  display: block;
-  height: 0;
-  visibility: hidden;
-  clear: both;
+  position: absolute;
+  margin-top: 0;
+  padding-left: 0;
+  -webkit-transition: all 2s ease;
 }
 .showing-ppt li {
   position: absolute;
-  width: 100%;
-  height: 300px;
-  -webkit-transition: 2s all ease;
-  z-index: 1;
-  opacity: 0;
+  top: 0;
+  width: 950px;
+  height: 100%;
+  margin-right: 50px;
+  overflow: hidden;
 }
 @media screen and (min-width: 980px) {
-  .showing-ppt {
-    display: none;
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 99999;
-    background-color: white;
-  }
-  .showing-ppt li {
-    width: 100%;
-    height: 100%;
-  }
+  
 }

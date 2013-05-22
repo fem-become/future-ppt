@@ -3,57 +3,25 @@
   */
 @import '../mixins.less';
 
-.easy-sharing-box{
-  margin-top: 30px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  // height: 100%;
-  width: 100%;
-  z-index: 99999;
-  .opacity-bg{
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 120%;
-    background-color: black;
-    opacity: 0.3;
-    z-index: -1;
-  }
-  .box-detail{
-    position: relative;
+.content{
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 980px) {
+  
+  .header, .content, .crumbs{
     width: 300px;
-    height: 100%;
-    margin: 0 auto;
-  }
-  .box-item{ //w: 200px h:150px;
-    float: left;
-    position: relative;
-    width: 150px;
-    height: 100px;
-    .box-item-i{
-      margin: 5px;
-      border-width: 2px;
-      border-style: solid;
-      height: 90%;
-    }
-    .title{
-      font-size: 12px;
-      font-weight: bolder;
-    }
-    .desc{
-      
-    }
-  }
-  .right-item{
-    margin-right: 0;
   }
 }
+// pc
+@media screen and (min-width: 980px) {
+  .header, .content, .crumbs{
+    width: 950px;
+  }
+}
+
 /*slide 特效*/
 .box-detail{
-  overflow-x: hidden;
-  overflow-y: visible;
   .scroller{
     // position: absolute;
     // width: 999999px;
@@ -77,79 +45,7 @@
 }
 
 
-/**
-  * ppt playing
-  */
-.easy-sharing-box{
-  // display: none;
-}
-.ppt-play-box{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  .item-wrap{
-    
-  }
-  .box-item{
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    -webkit-animation-duration: 3s;
-    -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: 200;
-    background-color: gray;
-  }
-  .prev-item, .curr-item, .next-item{
-    
-  }
-  .prev-item{
-    
-  }
-  .curr-item{
-
-  }
-  .next-item{
-    -webkit-transform: translateX(-50%) scale(0.5);
-    opacity: 0.3;
-  }
-}
-
-// pc
-.easy-sharing-box{
-  .box-detail{
-    width: auto;
-  }
-}
-
-// 圆动
-@-webkit-keyframes shakeHide {
-  0%, 100% {-webkit-transform: translateX(0) scale(1);}
-  23% {-webkit-transform: translateX(-50%) scale(0.6); opacity: 0.3;}
-  27% {-webkit-transform: translateX(-50%) scale(0.5); opacity: 0.3;}
-  50% {-webkit-transform: translateX(0) scale(0.3); opacity: 0;}
-  73% {-webkit-transform: translateX(50%) scale(0.5);opacity: 0.3;}
-  77% {-webkit-transform: translateX(50%) scale(0.6);opacity: 0.3;}
-}
-.shakeHide {
-  -webkit-animation-name: shakeHide;
-  -moz-animation-name: shakeHide;
-  -o-animation-name: shakeHide;
-  animation-name: shakeHide;
-}
-
-@-webkit-keyframes shakeShow {
-
-}
-.shakeShow {
-
-}
-
-
-
-
-
-
+@import 'tpl-show.less';
 @import 'entrance.less';
 @import 'ppt-style.less';
 @import 'ppt-edit.less';

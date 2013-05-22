@@ -13,7 +13,7 @@ var io = require('socket.io').listen(server);
 var cons = require('consolidate');
 var mobileDetect = require('./libs/mobile-detect');
 
-server.listen(7920);
+server.listen(80);
 
 app.enable('trust proxy');
 
