@@ -109,7 +109,7 @@
             $('#cube1').delegate(doubleTap,'.J_PPTItem', function(e){
                 var target = $(e.currentTarget);
                 var _x = e.offsetX / target.width() * 100 + '%', _y = e.offsetY / target.height() * 100 + '%';
-                scaleItem(target, 2, {
+                scaleItem({
                   top: _x
                   ,left: _y
                 });
@@ -127,19 +127,23 @@
              window.addEventListener("orientationchange", handleRotation );
         }
 
+        var curPPTItem = null;
         //双击放大 缩小
-        function scaleItem(target, scaleVal, origin){
+        function scaleItem(origin, scaleVal){
+          if( !curPPTItem ){
+            curPPTItem = $('#cube1').one('.J_PPTItem');
+          }
           if( !scaleVal ){
             scaleVal = 2;
           }
-          if(target.css('-webkit-transform') == 'none'){
+          if(curPPTItem.css('-webkit-transform') == 'none'){
               
 
-              target.css('-webkit-transform-origin', origin.top + ' ' + origin.left);
-              target.css('-webkit-transform', 'scale(' + scaleVal + ')');
+              curPPTItem.css('-webkit-transform-origin', origin.top + ' ' + origin.left);
+              curPPTItem.css('-webkit-transform', 'scale(' + scaleVal + ')');
           }
           else{
-              target.css('-webkit-transform', '');
+              curPPTItem.css('-webkit-transform', '');
           }
         }
 
@@ -219,6 +223,7 @@
           data: g_pptdata[cIdx]
           ,index: cIdx
         }) )
+        curPPTItem = items[cIdx%4].one('.J_PPTItem');
       });
     }
 
