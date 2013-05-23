@@ -9,8 +9,7 @@
     <div class="facebottom tb">6</div>
   </div>
 </div>
-  <ul id="J_PPPTBox" style="display: none;">
-  </ul>
+<div class="msg" id="J_Msg" style="display: none;"></div>
 </div>
     <div id="J_ControlArea" class="control-ppt-area">
         <div class="enter-control"></div>
@@ -20,7 +19,7 @@
 <script>
     KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
         var $ = S.all;
-        var minShowTpl = '\
+        var minShowTpl = '<div class="J_PPTItem ppt-item">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -34,7 +33,7 @@
                       {{#else}}\
                       单击此处添加副标题\
                       {{/if}}\
-                    ';
+                    </div>';
 
 
         MS.startup(function (data) {
@@ -80,25 +79,22 @@
         function eventHanlde(){
             //光标移动 左、右
             $(document).on('keyup', function(e){
-                if( e.keyCode == 37){
+                if( e.keyCode == 37 || e.keyCode == 38){
                     _prev();
                 }
-                else if( e.keyCode == 39){
+                else if( e.keyCode == 39 || e.keyCode == 40){
                     _next();
                 }
             })
 
             var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
-            $('#J_PPPTBox').delegate(doubleTap,'.J_PPTItem', function(e){
+            $('#cube1').delegate(doubleTap,'.J_PPTItem', function(e){
                 var target = $(e.currentTarget);
-                if(target.css('-webkit-transform') == 'none'){
-                    var _x = e.offsetX, _y = e.offsetY;
-                    target.css('-webkit-transform', 'scale(2)');
-                    target.css('-webkit-transform-origin', _x + ' ' + _y);
-                }
-                else{
-                    target.css('-webkit-transform', '');
-                }
+                var _x = e.offsetX / target.width() * 100 + '%', _y = e.offsetY / target.height() * 100 + '%';
+                scaleItem(target, 2, {
+                  top: _x
+                  ,left: _y
+                });
             })
 
             $('#cube1').on('swipe', function(e){
@@ -111,6 +107,22 @@
             })
 
              window.addEventListener("orientationchange", handleRotation );
+        }
+
+        //双击放大 缩小
+        function scaleItem(target, scaleVal, origin){
+          if( !scaleVal ){
+            scaleVal = 2;
+          }
+          if(target.css('-webkit-transform') == 'none'){
+              
+
+              target.css('-webkit-transform-origin', origin.top + ' ' + origin.left);
+              target.css('-webkit-transform', 'scale(' + scaleVal + ')');
+          }
+          else{
+              target.css('-webkit-transform', '');
+          }
         }
 
         //渲染ppt
@@ -133,7 +145,11 @@
 
     function _prev(){
       if( cIdx == 0) {
-        alert('已经到达第一页')
+        // alert('已经到达第一页')
+        $('#J_Msg').html('已经到达第一页').show();
+        setTimeout(function(){
+          $('#J_Msg').hide();
+        },500);
         return false;
       }
       var items = $('#J_PPPTBox').children();
@@ -147,7 +163,11 @@
     }
     function _next(){
       if( cIdx == cLen-1){
-        alert('已经到达最后一页');
+        // alert('已经到达最后一页');
+        $('#J_Msg').html('已经到达最后一页').show();
+        setTimeout(function(){
+          $('#J_Msg').hide();
+        },500);
         return false;
       } 
       var items = $('#J_PPPTBox').children();
