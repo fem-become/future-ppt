@@ -18,6 +18,13 @@
     width: 950px;
   }
 }
+@media screen and (min-width: 500px) {
+  .header,
+  .content,
+  .crumbs {
+    width: 450px;
+  }
+}
 /*slide 特效*/
 .box-detail .scroller {
   -webkit-transition: 1s all ease;
@@ -310,7 +317,6 @@
   background: #999;
 }
 .edit-panel .waiting-page-wrap {
-  height: 405px;
   overflow-y: auto;
   width: 280px;
   padding: 10px;
@@ -468,6 +474,9 @@
     margin: 0 auto;
     background-position: 0 -32px;
   }
+}
+@media screen and (min-width: 600px) {
+  
 }
 /*
   ppt playing

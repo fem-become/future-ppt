@@ -15,9 +15,8 @@ var app = {},
     if(mobile == 'true'){
         var exec = /&key=(\d+)/.exec(location.hash);
         window.key = exec ? exec[1] : undefined;
-        alert('Key is ' + window.key);
     }else{
-        window.key = S.now() + '' + S.guid();
+        window.key = (S.now() + '' + Math.random().toFixed(3) * 1000).replace(/^\d{8}/, '');
 //        window.key = 1;
     }
 
@@ -136,22 +135,28 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
                 case key + '_pair':
                     S.log('Device paired.');
                     D.hide('#J_QRWrapper');
-                    S.log('forward to: ' + data.page);
-                    if(app.get('viewpath') != data.page){
+                    if(app.get('viewpath') != data.page && data.page !== 'control.html'){
+                        S.log('forward to: ' + data.page);
                         // TODO control.html ²»ÄÜforward
                         app.forward(data.page);
                     }
                     break;
                 case key + '_reset':
                     break;
-                case key + '_next':
-                    console.log('[control] next page');
-                    break;
-                case key + '_prev':
-                    console.log('[control] prev page');
-                    break;
+//                case key + '_next':
+//                    console.log('[control] next page');
+//                    if(curPage === 'play_ppt.html'){
+//                        window.nextPPT();
+//                    }
+//                    break;
+//                case key + '_prev':
+//                    console.log('[control] prev page');
+//                    if(curPage === 'play_ppt.html'){
+//                        window.prevPPT();
+//                    }
+//                    break;
                 case key + '_move':
-                    if(app.get('viewpath') !== 'main.html'){
+                    if(app.get('viewpath') === 'play_ppt.html'){
                         var curPos = d.curPos;
                         var startPos = d.startPos;
                         var yOffset = curPos.y - startPos.y;
@@ -169,7 +174,8 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
 
                         D.css('#J_ScreenPointer', {
                             'top': top,
-                            'left': left
+                            'left': left,
+                            'display': 'block'
                         });
                         var msg = [
                             'z: ' + curPos.z,
@@ -190,18 +196,20 @@ KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
                     }
                     break;
                 case key + '_pointer':
-                    var pointer = D.get('#J_ScreenPointer');
-                    if(pointer){
-                        D.show(pointer);
-                        D.css(pointer, {
-                            'position': 'absolute',
-                            'left': D.viewportWidth() / 2 - 10,
-                            'top': D.viewportHeight() / 2 - 10
-                        });
+                    if(app.get('viewpath') === 'play_ppt.html'){
+                        var pointer = D.get('#J_ScreenPointer');
+                        if(pointer){
+                            D.show(pointer);
+                            D.css(pointer, {
+                                'position': 'absolute',
+                                'left': D.viewportWidth() / 2 - 10,
+                                'top': D.viewportHeight() / 2 - 10
+                            });
+                        }
                     }
                     break;
                 case key + '_pointer_stop':
-                    D.hide(pointer);
+                    D.hide('#J_ScreenPointer');
                     break;
             }
         });

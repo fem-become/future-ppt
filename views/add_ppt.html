@@ -88,6 +88,7 @@
 </section>
 <script>
     KISSY.use('mobile/app/1.0/,dom,event', function (S, MS, D, E) {
+        var $ = S.all;
 
         MS.startup(function (data) {
             var app = this;
@@ -97,6 +98,7 @@
             });
 
             D.attr('#J_BackBtn', 'href', 'main.html');
+            begin();
         });
 
         MS.teardown(function () {
@@ -107,5 +109,29 @@
             // 注册 includeOnce
         });
 
+        function begin(){
+            window.addEventListener("orientationchange", setHeight );
+        }
+
+        function setHeight(){
+            var orient;
+         
+            if (window.orientation) { 
+                orient = Math.abs(window.orientation) === 90 ? 'landscape' : 'portrait';
+            }
+            else if (window.screen) {
+                var width = screen.width;
+                var height = screen.height;
+                orient = (width > height) ? 'landscape' : 'portrait';
+            }
+            else {
+                orient = 'unknow';
+            }
+            // $('.MS-pal').addClass(orient);
+            var clientWidth = document.body.clientWidth;
+            $('.MS-pal').width( clientWidth );
+            $('.MS-pal').parent().width( clientWidth );
+            $('.MS-pal').parent().parent().width( clientWidth );
+        }
     });
 </script>

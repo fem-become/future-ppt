@@ -139,7 +139,7 @@ body {
     display: block;
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 20px;
     width: 200px;
     text-align: center;
     color: #fff;
@@ -188,6 +188,7 @@ body {
     left: 50%;
     top: 50%;
     margin: -125px 0 0 -125px;
+    display: block;
 }
 .prev_btn,
 .next_btn {
@@ -320,6 +321,21 @@ body {
 .qr-img-box-mask p {
     text-align: center;
     font-weight: bold;
+}
+
+.screen-pointer {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 30px;
+    height: 30px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    border-radius: 15px;
+    z-index: 999999;
+    background: #f00;
+    box-shadow: 0 0 15px 3px rgba(255, 0, 0, 0.6);
 }
 /*@media only screen and (max-width: 768px) {*/
 
