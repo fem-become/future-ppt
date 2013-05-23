@@ -111,7 +111,7 @@
         function begin(){
             window.addEventListener("orientationchange", setHeight );
         }
-
+        
         function setHeight(){
             var orient;
          
@@ -128,9 +128,10 @@
             }
             // $('.MS-pal').addClass(orient);
             var clientWidth = document.body.clientWidth;
-            $('.MS-pal').width( clientWidth );
-            $('.MS-pal').parent().width( clientWidth );
-            $('.MS-pal').parent().parent().width( clientWidth );
+            var clientHeight = document.body.clientHeight;
+            $('.MS-pal').width( clientWidth ).height(clientHeight);
+            $('.MS-pal').parent().width( clientWidth ).height(clientHeight);
+            $('.MS-pal').parent().parent().width( clientWidth ).height(clientHeight);
         }
     });
 </script>

@@ -109,6 +109,8 @@
                 _prev();
               }
             })
+
+             window.addEventListener("orientationchange", handleRotation );
         }
 
         //渲染ppt
@@ -145,7 +147,7 @@
     }
     function _next(){
       if( cIdx == cLen-1){
-        alert('已经到达第一页');
+        alert('已经到达最后一页');
         return false;
       } 
       var items = $('#J_PPPTBox').children();
@@ -203,5 +205,19 @@
       }
     }
     
+    setScale();
+    function setScale(){
+      var clientWidth = document.body.clientWidth;
+      var clientHeight = document.body.clientHeight;
+
+      if( clientWidth < 950){
+        $('#J_ShowingPPT').css('-webkit-transform', 'scale(' + clientWidth/950 + ')');
+        $('#J_ShowingPPT').height( clientHeight - 52 ).css('overflow', 'hidden');
+      }
+    }
+    
+    function handleRotation(){
+      setScale();
+    }
 });
 </script>

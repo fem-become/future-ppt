@@ -489,6 +489,7 @@
   position: relative;
   margin: 0 auto;
   width: 950px;
+  -webkit-transform-origin: 0 0;
 }
 .showing-ppt ul {
   position: absolute;
@@ -581,6 +582,7 @@
   background-color: #ccc;
   background-size: 450px 300px;
   position: absolute;
+  overflow: hidden;
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden;
