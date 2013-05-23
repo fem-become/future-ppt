@@ -30,7 +30,7 @@
             <div class="preview-btn"></div>
         </a>
         <div class="other-ctl">
-            <a href="#" class="save J_Save">保存</a>
+            <a href="#" class="save " id="J_Save">保存</a>
             <a href="#" class="link J_Link">链接</a>
             <a href="play_ppt.html" class="play" id="J_Play">播放</a>
             <a href="#" class="tdc" id="J_Tdc">二维码</a>
@@ -47,8 +47,8 @@
         var $ = S.all;
 
         var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
-                      <textarea class="J_TitleEdit" type="text" \
-                      placeholder="单击此处添加标题">{{data.title.text}}</textarea>\
+                      <input class="J_TitleEdit" type="text" \
+                      placeholder="单击此处添加标题" value="{{data.title.text}}"/>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
                       <textarea class="J_DescEdit" type="text" placeholder="单击此处添加副标题">{{data.desc.text}}</textarea>\
@@ -111,12 +111,12 @@
         });
 
 
-var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo3.jpg'>"}}];
+var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"概述"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/icon.jpg'>\n<br/>它是一个WEB APP，可以创建简易的PPT，并可通过多终端交互的方式进行演讲"}},{"title":{"margin":"4% 10% 0","text":"功能"},"desc":{"margin":"4% 10% 0","text":"<dl>\n\t\t\t<dt>立即创建分享</dt>\n\t\t\t<dd>没有任何要求，立即体验创建PPT，演讲的功能</dd>\n\t\t\t<dt>我的Slides</dt>\n\t\t\t<dd>需要帐号系统，登录后，可以管理自己创建的PPT(产品化时制作)</dd>\n\t\t\t<dt>大家的Slides</dt>\n\t\t\t<dd>用户主动公开分享的PPT列表(产品化时制作)</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"特性"},"desc":{"margin":"2% 10% 0","text":"<dl>\n\t\t\t<dt>多终端</dt>\n\t\t\t<dd>支持多终端，布局、交互方式都会有所不同</dd>\n\t\t\t<dt>离线应用</dt>\n\t\t\t<dd>可离线进行PPT创建（Application Cache）</dd>\n\t\t\t<dd>可离线进行演讲，需要在PC上安装好简易分享环境（演讲最小环境：NodeJS, WebSocket, PPT presentation page）</dd>\n\t\t\t<dt>终端配对</dt>\n\t\t\t<dd>PC上打开主站，即寻找移动端进行配对</dd>\n\t\t\t<dt>移动端遥控器功能</dt>\n\t\t\t<dd>甩动开始投影（与PC配对成功后，移动端打开要演讲的PPT，然后甩动，PC上即开启该PPT）</dd>\n\t\t\t<dd>投影缩放功能</dd>\n\t\t\t<dd>指针功能</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"前端Team"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/f2e.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计师 - 尚隆"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/shanglong.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design2.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"技术点"},"desc":{"margin":"2% 10% 0","text":"响应式布局<br/>\nKissy Mobile框架<br/>\nWebSocket通信<br/>\n移动设备特性<br/>"}},{"title":{"margin":"4% 10% 0","text":"未来"},"desc":{"margin":"2% 10% 0","text":"将其产品化，与懒懒交流会深度合作"}}];
 
         function begin(){
             //读本地存储
             if( localStorage.getItem('pptData') ){
-                g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+                // g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
             }
 
             KISSY.use('template', function(S, TT){
@@ -168,6 +168,10 @@ var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"m
                     previewPPT();
                 })
 
+                $('#J_Save').on(clickEventName, function(e){
+                    previewPPT();
+                })
+
                 //预览
                 $('#J_PreviewBtn').on(clickEventName, function(){
                     previewPPT();
@@ -179,7 +183,7 @@ var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"m
                 function addOnePage(){
                     g_pptdata.push({
                         title: {
-                            margin: '20% 10% 0',
+                            margin: '4% 10% 0',
                             text: ''
                         },
                         desc: {

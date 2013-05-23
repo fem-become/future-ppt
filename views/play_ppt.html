@@ -25,19 +25,20 @@
     KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
         var $ = S.all;
         var minShowTpl = '<div class="J_PPTItem ppt-item">\
-                      <div class="title" style="margin: {{data.title.margin}}">\
+                      <p class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
                       {{#else}}\
                       单击此处添加标题\
                       {{/if}}\
-                      </div>\
-                      <div class="desc" style="margin: {{data.desc.margin}}">\
+                      </p>\
+                      <p class="desc" style="margin: {{data.desc.margin}}">\
                       {{#if data.desc.text}}\
-                      {{data.desc.text}}</div>\
+                      {{data.desc.text}}\
                       {{#else}}\
                       单击此处添加副标题\
                       {{/if}}\
+                      </p>\
                     </div>';
 
 

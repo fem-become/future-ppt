@@ -9,6 +9,7 @@
 }
 .showing-ppt{
   position: relative;
+  top: 35px;
   margin: 0 auto;
   width: 950px;
   // overflow: hidden;
@@ -40,6 +41,14 @@
     height: 100%;
     -webkit-transform-origin: 0 0;
     -webkit-transition-duration: 0.5s;
+  }
+  .title{
+    font-size:14px;
+    font-weight: bolder;
+    border-bottom: 1px solid #eee;
+  }
+  dl{
+    margin-left: 80px;
   }
 }
 @media screen and (min-width: 980px) {
@@ -112,6 +121,7 @@
   float:left;
   width:950px;
   height:300px;
+  color: white;
   -webkit-transition-duration: 1s;
   
   /* Transform */
@@ -141,67 +151,56 @@
 
 /*** Cube's face Style ***/
 .cube div{
-  background-color:#ccc;
-  background-size:450px 300px;
   position:absolute;
+  background-size:450px 300px;
   overflow: hidden;
   
   -webkit-transform-origin: 50% 50%;
   -moz-transform-origin: 50% 50%;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
+  img{
+    // -webkit-transform-origin: 0 0;
+    // -webkit-transform: scale(0.5);
+  }
 }
+@pptHeight: 320px;
+@pptWidth: 80%;
 .cube div.fb{
-  width:950px;
-  height:300px;
+  left: (100% - @pptWidth)/2;
+  width: @pptWidth;
+  height: @pptHeight;
+  overflow: hidden;
 }
 .cube div.tb{
-  width:950px;
-  height:300px;
+  left: (100% - @pptWidth)/2;
+  width: @pptWidth;
+  height: @pptHeight;
+  overflow: hidden;
 }
 .cube div.lr{
-  width:600px;
-  height:300px;
+  width: 600px;
+  height: @pptHeight;
 }
 
 /* Face image and position */
 .facefront{
-  background-image:url(../image.jpg);
-  -webkit-transform: translateZ(150px);  
+  // background-image:url(../image.jpg);
+  -webkit-transform: ~"translateZ("@pptHeight/2~")";
   -moz-transform: translateY(0px);  
 }
 .faceback{
-  background-image:url(../image3.jpg);
-  -webkit-transform: rotateY(180deg) rotateZ(180deg) translateZ(150px);
+  // background-image:url(../image3.jpg); 
+  -webkit-transform: rotateY(180deg) rotateZ(180deg) ~"translateZ("@pptHeight/2~")";
   -moz-transform: translateY(300px);
 }
 .facetop{
-  background-image:url(../image2.jpg);
-  -webkit-transform: rotateX(90deg) translateZ(150px);
+  // background-image:url(../image2.jpg);
+  -webkit-transform: rotateX(90deg) ~"translateZ("@pptHeight/2~")";
   -moz-transform: translateY(600px);
 }
 .facebottom{
-  background-image:url(../image4.jpg);
-  -webkit-transform: rotateX(-90deg) translateZ(150px);
+  // background-image:url(../image4.jpg);
+  -webkit-transform: rotateX(-90deg) ~"translateZ("@pptHeight/2~")";
   -moz-transform: translateY(900px);
-}
-.faceleft{
-  background-color:#000;
-  -webkit-transform: rotateY(90deg) translateZ(0px);
-  -moz-transform: scaleX(0);
-}
-.faceright{
-  background-color:#000;
-  -webkit-transform: rotateY(-90deg) translateZ(150px); 
-  -moz-transform: scaleX(0);
-}
-
-#cube1 div{
-  background-position:0 0;
-}
-#cube2 div{
-  background-position:-150px 0;
-}
-#cube3 div{
-  background-position:-300px 0;
 }
