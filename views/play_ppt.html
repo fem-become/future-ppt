@@ -12,8 +12,13 @@
 <div class="msg" id="J_Msg" style="display: none;"></div>
 </div>
     <div id="J_ControlArea" class="control-ppt-area">
-        <div class="enter-control"></div>
-        <div class="save-ppt"></div>
+        <div id="J_EnterControlBtn" class="enter-control"></div>
+        <div id="J_SavePPTBtn" class="save-ppt"></div>
+    </div>
+    <div id="J_EnterPIN" class="enter-pin-box">
+        <form id="J_EnterPINForm" action="" method="post">
+            <input id="J_EnterPINInput" type="text" value="" placeholder="点击输入二维码" />
+        </form>
     </div>
 </section>
 <script>
@@ -45,12 +50,25 @@
             if(mobile == 'true'){
                 var controlTimer;
                 var $controlArea = $('#J_ControlArea');
-                $('#J_SettingBtn').on('click', function(e){
-                    $controlArea.slideUp();
+                $('#J_SettingBtn').on('click tap', function(e){
+                    $controlArea.show();
                     controlTimer && clearTimeout(controlTimer);
                     controlTimer = setTimeout(function(){
-                        $controlArea.slideDown();
+                        $controlArea.slideDown(.5);
                     }, 1500);
+                });
+                $('#J_EnterControlBtn').on('click tap', function(e){
+                    $('#J_EnterPIN').show();
+                });
+                $('#J_EnterPINForm').on('submit', function(e){
+                    e.preventDefault();
+                    window.key = D.val('#J_EnterPINInput');
+                    window.socket.emit("send", {
+                        key: window.key,
+                        act: "pair",
+                        page: app.get('viewpath')
+                    });
+                    app.forward('control.html');
                 });
             }
 
@@ -98,12 +116,12 @@
             })
 
             $('#cube1').on('swipe', function(e){
-              if( e.direction == 'up'){
-                _next();
-              }
-              else if(e.direction == 'down'){
-                _prev();
-              }
+                if( e.direction == 'up'){
+                    _next();
+                }
+                else if(e.direction == 'down'){
+                    _prev();
+                }
             })
 
              window.addEventListener("orientationchange", handleRotation );
@@ -239,5 +257,20 @@
     function handleRotation(){
       setScale();
     }
+	window.socket.on('get_response', function (data) {
+		var combine = data.key + '_' + data.act;
+		switch(combine){
+			case key + '_next':
+				console.log('[control] next page');
+				_prev();
+				break;
+			case key + '_prev':
+				console.log('[control] prev page');
+				_next();
+				break;
+		}
+	});
+	//        window.prevPPT = _prev;
+	//        window.nextPPT = _next;
 });
 </script>
