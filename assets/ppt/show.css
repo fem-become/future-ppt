@@ -159,8 +159,8 @@
   color: #333;
 }
 .type-simple .box-item-i {
-  background-color: white;
   border-color: #1a7eb0;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#cccccc), to(#ffffff));
 }
 .type-simple .title {
   margin: 35px 5px 0;
@@ -172,7 +172,7 @@
   color: #666;
 }
 .type-simple-2 .box-item-i {
-  background-color: #c6c6c6;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#c6c6c6), to(#ffffff));
 }
 .type-simple-2 .title {
   margin: 35px 5px 0;
@@ -185,7 +185,7 @@
   text-align: center;
 }
 .type-ashen .box-item-i {
-  background-color: #d4cfcb;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#d4cfcb), to(#ffffff));
 }
 .type-ashen .title {
   margin: 15px 0 0 0;
@@ -197,7 +197,7 @@
   text-align: center;
 }
 .type-gray .box-item-i {
-  background-color: gray;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#808080), to(#ffffff));
 }
 .type-gray .title {
   color: white;
@@ -211,7 +211,7 @@
   color: white;
 }
 .type-blue .box-item-i {
-  background-color: #46aed5;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#46aed5), to(#ffffff));
 }
 .type-blue .title {
   margin: 5px 5px 0;
@@ -223,7 +223,7 @@
   color: white;
 }
 .type-orange .box-item-i {
-  background-color: #f5542a;
+  background: -webkit-gradient(linear, 0 0, 0 150%, from(#f5542a), to(#ffffff));
 }
 .type-orange .title {
   margin: 10px 0 0 5px;
