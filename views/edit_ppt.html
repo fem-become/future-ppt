@@ -30,10 +30,10 @@
             <div class="preview-btn"></div>
         </a>
         <div class="other-ctl">
-            <a href="#" class="save " id="J_Save">保存</a>
-            <a href="#" class="link J_Link">链接</a>
+            <a href="javascript:void(0);" class="save " id="J_Save">保存</a>
+            <a href="javascript:void(0);" class="link J_Link">链接</a>
             <a href="play_ppt.html" class="play" id="J_Play">播放</a>
-            <a href="#" class="tdc" id="J_Tdc">二维码</a>
+            <a href="javascript:void(0);" class="tdc" id="J_Tdc">二维码</a>
         </div>
     </div>
 
@@ -99,6 +99,15 @@ KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
             D.append(mask, content);
             var box = D.create('<div id="J_QRImgBox" class="qr-img-box"><img src="' + window.qrUrl + '" width="300" height="300" ><p>PIN码：' + window.key + '</p></div>');
             D.append(box, content);
+        });
+
+        $('#J_Save').on('click', function(e){
+            e.preventDefault();
+            alert('保存成功！');
+        });
+
+        $('#J_Link').on('click', function(e){
+            e.preventDefault();
         });
     });
 
