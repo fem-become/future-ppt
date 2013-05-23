@@ -43,17 +43,17 @@
     </div> -->
 </section>
 <script>
-    KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
-        var $ = S.all;
+KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+    var $ = S.all;
 
-        var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
+    var editingTpl = '<div class="title" style="margin: {{data.title.margin}}">\
                       <input class="J_TitleEdit" type="text" \
                       placeholder="单击此处添加标题" value="{{data.title.text}}"/>\
                     </div>\
                     <div class="desc" style="margin: {{data.desc.margin}}">\
                       <textarea class="J_DescEdit" type="text" placeholder="单击此处添加副标题">{{data.desc.text}}</textarea>\
                     </div>';
-        var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
+    var minShowTpl = '<li class="J_MinItem" data-c="{{index}}">\
                       <div class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -68,180 +68,180 @@
                       单击此处添加副标题\
                       {{/if}}\
                     </li>';
-        var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
+    var pptTpl = '<div class="title" style="margin: {{data.title.offset}}">\
                   <span>{{data.title.text}}</span>\
                 </div>\
                 <div class="desc" style="margin: {{data.desc.offset}}">\
                   <span>{{data.desc.text}}</span>\
                 </div>';
 
-        var currentEditingIdx = 0;
+    var currentEditingIdx = 0;
 
-        var editingPage = $('#J_EditingPage');
+    var editingPage = $('#J_EditingPage');
 
-        var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
-        MS.startup(function (data) {
-            var app = this;
-            NS.toggleNav('back');
+    var clickEventName = S.UA.iphone ? 'singleTap' : 'click';
+    MS.startup(function (data) {
+        var app = this;
+        NS.toggleNav('back');
 //            D.attr('#J_BackBtn', 'href', 'add_ppt.html');
-            begin();
+        begin();
 
-            $('#J_Tdc').on('click', function(e){
-                e.halt();
-                D.remove('#J_QRImgBox');
-                D.remove('#J_QRImgBoxMask');
-                var content = D.get('.edit-panel', D.get('#J_MSContent'));
-                var mask = D.create('<div id="J_QRImgBoxMask" class="qr-img-box-mask"></div>');
-                D.css(mask, {
-                    width: D.viewportWidth(),
-                    height: D.viewportHeight()
-                });
-                D.append(mask, content);
-                var box = D.create('<div id="J_QRImgBox" class="qr-img-box"><img src="' + window.qrUrl + '" width="300" height="300" ><p>PIN码：' + window.key + '</p></div>');
-                D.append(box, content);
+        $('#J_Tdc').on('click', function(e){
+            e.halt();
+            D.remove('#J_QRImgBox');
+            D.remove('#J_QRImgBoxMask');
+            var content = D.get('.edit-panel', D.get('#J_MSContent'));
+            var mask = D.create('<div id="J_QRImgBoxMask" class="qr-img-box-mask"></div>');
+            D.css(mask, {
+                width: D.viewportWidth(),
+                height: D.viewportHeight()
             });
+            D.append(mask, content);
+            var box = D.create('<div id="J_QRImgBox" class="qr-img-box"><img src="' + window.qrUrl + '" width="300" height="300" ><p>PIN码：' + window.key + '</p></div>');
+            D.append(box, content);
         });
+    });
 
-        MS.teardown(function () {
-            // 注册 teardown
-        });
+    MS.teardown(function () {
+        // 注册 teardown
+    });
 
-        MS.includeOnce(function () {
-            // 注册 includeOnce
-        });
-
-
-var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"概述"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/icon.jpg'>\n<br/>它是一个WEB APP，可以创建简易的PPT，并可通过多终端交互的方式进行演讲"}},{"title":{"margin":"4% 10% 0","text":"功能"},"desc":{"margin":"4% 10% 0","text":"<dl>\n\t\t\t<dt>立即创建分享</dt>\n\t\t\t<dd>没有任何要求，立即体验创建PPT，演讲的功能</dd>\n\t\t\t<dt>我的Slides</dt>\n\t\t\t<dd>需要帐号系统，登录后，可以管理自己创建的PPT(产品化时制作)</dd>\n\t\t\t<dt>大家的Slides</dt>\n\t\t\t<dd>用户主动公开分享的PPT列表(产品化时制作)</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"特性"},"desc":{"margin":"2% 10% 0","text":"<dl>\n\t\t\t<dt>多终端</dt>\n\t\t\t<dd>支持多终端，布局、交互方式都会有所不同</dd>\n\t\t\t<dt>离线应用</dt>\n\t\t\t<dd>可离线进行PPT创建（Application Cache）</dd>\n\t\t\t<dd>可离线进行演讲，需要在PC上安装好简易分享环境（演讲最小环境：NodeJS, WebSocket, PPT presentation page）</dd>\n\t\t\t<dt>终端配对</dt>\n\t\t\t<dd>PC上打开主站，即寻找移动端进行配对</dd>\n\t\t\t<dt>移动端遥控器功能</dt>\n\t\t\t<dd>甩动开始投影（与PC配对成功后，移动端打开要演讲的PPT，然后甩动，PC上即开启该PPT）</dd>\n\t\t\t<dd>投影缩放功能</dd>\n\t\t\t<dd>指针功能</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"前端Team"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/f2e.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计师 - 尚隆"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/shanglong.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design2.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"技术点"},"desc":{"margin":"2% 10% 0","text":"响应式布局<br/>\nKissy Mobile框架<br/>\nWebSocket通信<br/>\n移动设备特性<br/>"}},{"title":{"margin":"4% 10% 0","text":"未来"},"desc":{"margin":"2% 10% 0","text":"将其产品化，与懒懒交流会深度合作"}}];
+    MS.includeOnce(function () {
+        // 注册 includeOnce
+    });
 
 
-        function begin(){
-            //读本地存储
-            if( localStorage.getItem('pptData') ){
-                // g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
-            }
-
-            KISSY.use('template', function(S, TT){
-                showEditingItemByIdx(currentEditingIdx);
-
-                //返回
-                // $('#J_GoBack').on(clickEventName, function(){
-                //   window.history.go(-1);
-                // })
-
-                //设置
-                // $('#J_Setting').on(clickEventName, function(){
-
-                // })
+    var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"概述"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/icon.jpg'>\n<br/>它是一个WEB APP，可以创建简易的PPT，并可通过多终端交互的方式进行演讲"}},{"title":{"margin":"4% 10% 0","text":"功能"},"desc":{"margin":"4% 10% 0","text":"<dl>\n\t\t\t<dt>立即创建分享</dt>\n\t\t\t<dd>没有任何要求，立即体验创建PPT，演讲的功能</dd>\n\t\t\t<dt>我的Slides</dt>\n\t\t\t<dd>需要帐号系统，登录后，可以管理自己创建的PPT(产品化时制作)</dd>\n\t\t\t<dt>大家的Slides</dt>\n\t\t\t<dd>用户主动公开分享的PPT列表(产品化时制作)</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"特性"},"desc":{"margin":"2% 10% 0","text":"<dl>\n\t\t\t<dt>多终端</dt>\n\t\t\t<dd>支持多终端，布局、交互方式都会有所不同</dd>\n\t\t\t<dt>离线应用</dt>\n\t\t\t<dd>可离线进行PPT创建（Application Cache）</dd>\n\t\t\t<dd>可离线进行演讲，需要在PC上安装好简易分享环境（演讲最小环境：NodeJS, WebSocket, PPT presentation page）</dd>\n\t\t\t<dt>终端配对</dt>\n\t\t\t<dd>PC上打开主站，即寻找移动端进行配对</dd>\n\t\t\t<dt>移动端遥控器功能</dt>\n\t\t\t<dd>甩动开始投影（与PC配对成功后，移动端打开要演讲的PPT，然后甩动，PC上即开启该PPT）</dd>\n\t\t\t<dd>投影缩放功能</dd>\n\t\t\t<dd>指针功能</dd>\n\t\t</dl>"}},{"title":{"margin":"4% 10% 0","text":"前端Team"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/f2e.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计师 - 尚隆"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/shanglong.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"设计"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/ppt/design2.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"技术点"},"desc":{"margin":"2% 10% 0","text":"响应式布局<br/>\nKissy Mobile框架<br/>\nWebSocket通信<br/>\n移动设备特性<br/>"}},{"title":{"margin":"4% 10% 0","text":"未来"},"desc":{"margin":"2% 10% 0","text":"将其产品化，与懒懒交流会深度合作"}}];
 
 
-                $('#J_MinShow').delegate(clickEventName, 'li',  function(e){
-                    var target = $(e.currentTarget);
-                    //新增一个ppt页
-                    if( target.hasClass('J_AddBtn') ){
-                        addOnePage();
-                        return ;
-                    }
+    function begin(){
+        //读本地存储
+        if( localStorage.getItem('pptData') ){
+            // g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+        }
 
-                    //缩略图 点击事件
-                    var idx = target.attr('data-c');
-                    saveEditingItem(currentEditingIdx);
-                    if( idx != undefined ){
-                        currentEditingIdx = parseInt(idx);
-                        showEditingItemByIdx(currentEditingIdx);
-                    }
-                })
+        KISSY.use('template', function(S, TT){
+            showEditingItemByIdx(currentEditingIdx);
 
-                var minShowLeft = 0;
-                $('#J_MinShow').on('swipe', function(e){
-                    var maxMinShowLeft = $('#J_MinShow').width();
-                    if( e.direction == 'left'){
-                        minShowLeft -= e.distance;
-                    }
-                    else if(e.direction == 'right'){
-                        minShowLeft += e.distance;
-                    }
-                    // if( minShow >)
-                    $('#J_MinShow').css('left', minShowLeft + 'px');
-                })
+            //返回
+            // $('#J_GoBack').on(clickEventName, function(){
+            //   window.history.go(-1);
+            // })
 
-                //播放
-                $('#J_Play').on(clickEventName, function(e){
-                    previewPPT();
-                })
+            //设置
+            // $('#J_Setting').on(clickEventName, function(){
 
-                $('#J_Save').on(clickEventName, function(e){
-                    previewPPT();
-                })
+            // })
 
-                //预览
-                $('#J_PreviewBtn').on(clickEventName, function(){
-                    previewPPT();
-                    fullScreenApi.requestFullScreen(document.getElementById('J_MSContent'));
-                })
 
-                //-----------------------------------------------actions
+            $('#J_MinShow').delegate(clickEventName, 'li',  function(e){
+                var target = $(e.currentTarget);
+                //新增一个ppt页
+                if( target.hasClass('J_AddBtn') ){
+                    addOnePage();
+                    return ;
+                }
 
-                //添加一页ppt
-                function addOnePage(){
-                    g_pptdata.push({
-                        title: {
-                            margin: '4% 10% 0',
-                            text: ''
-                        },
-                        desc: {
-                            margin: '2% 10% 0',
-                            text: ''
-                        }
-                    });
-
-                    //render minShow and editing this new page
-                    renderMinShow();
-                    currentEditingIdx = g_pptdata.length - 1;
+                //缩略图 点击事件
+                var idx = target.attr('data-c');
+                saveEditingItem(currentEditingIdx);
+                if( idx != undefined ){
+                    currentEditingIdx = parseInt(idx);
                     showEditingItemByIdx(currentEditingIdx);
                 }
+            })
 
-                //点击预览
-                function previewPPT(){
-                    saveEditingItem(currentEditingIdx);
-                    localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
+            var minShowLeft = 0;
+            $('#J_MinShow').on('swipe', function(e){
+                var maxMinShowLeft = $('#J_MinShow').width();
+                if( e.direction == 'left'){
+                    minShowLeft -= e.distance;
                 }
+                else if(e.direction == 'right'){
+                    minShowLeft += e.distance;
+                }
+                // if( minShow >)
+                $('#J_MinShow').css('left', minShowLeft + 'px');
+            })
 
-                //init render minShow
+            //播放
+            $('#J_Play').on(clickEventName, function(e){
+                previewPPT();
+            })
+
+            $('#J_Save').on(clickEventName, function(e){
+                previewPPT();
+            })
+
+            //预览
+            $('#J_PreviewBtn').on(clickEventName, function(){
+                previewPPT();
+                fullScreenApi.requestFullScreen(document.getElementById('J_MSContent'));
+            })
+
+            //-----------------------------------------------actions
+
+            //添加一页ppt
+            function addOnePage(){
+                g_pptdata.push({
+                    title: {
+                        margin: '4% 10% 0',
+                        text: ''
+                    },
+                    desc: {
+                        margin: '2% 10% 0',
+                        text: ''
+                    }
+                });
+
+                //render minShow and editing this new page
                 renderMinShow();
+                currentEditingIdx = g_pptdata.length - 1;
+                showEditingItemByIdx(currentEditingIdx);
+            }
 
-                //渲染
-                function renderMinShow(){
-                    var minShow = $('#J_MinShow');
-                    var _html = '';
-                    S.each(g_pptdata, function(item, idx){
+            //点击预览
+            function previewPPT(){
+                saveEditingItem(currentEditingIdx);
+                localStorage.setItem('pptData', S.JSON.stringify(g_pptdata));
+            }
 
-                        _html += TT(minShowTpl).render({
-                            data: item,
-                            index: idx
-                        });
-                    })
+            //init render minShow
+            renderMinShow();
 
-                    minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
-                }
+            //渲染
+            function renderMinShow(){
+                var minShow = $('#J_MinShow');
+                var _html = '';
+                S.each(g_pptdata, function(item, idx){
 
-                //显示编辑idx页 ppt大图
-                function showEditingItemByIdx(idx){
-                    editingPage.html(TT(editingTpl).render({
-                        data: g_pptdata[idx]
-                    }));
-                }
+                    _html += TT(minShowTpl).render({
+                        data: item,
+                        index: idx
+                    });
+                })
 
-                //保存正在编辑的ppt页
-                function saveEditingItem(idx){
-                    var box = $('#J_EditingPage');
-                    g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
-                    g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
+                minShow.html(_html + '<li class="add-btn J_AddBtn">+</li>');
+            }
 
-                    renderMinShow();
-                }
+            //显示编辑idx页 ppt大图
+            function showEditingItemByIdx(idx){
+                editingPage.html(TT(editingTpl).render({
+                    data: g_pptdata[idx]
+                }));
+            }
 
-            });
-        }
-    });
+            //保存正在编辑的ppt页
+            function saveEditingItem(idx){
+                var box = $('#J_EditingPage');
+                g_pptdata[idx].title.text = D.get('.J_TitleEdit', box).value.replace(/\"/g, '\'')
+                g_pptdata[idx].desc.text = D.get('.J_DescEdit', box).value.replace(/\"/g, '\'');
+
+                renderMinShow();
+            }
+
+        });
+    }
+});
 
 </script>

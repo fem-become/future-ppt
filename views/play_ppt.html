@@ -22,9 +22,9 @@
     </div>
 </section>
 <script>
-    KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
-        var $ = S.all;
-        var minShowTpl = '<div class="J_PPTItem ppt-item">\
+KISSY.use('mobile/app/1.0/,dom,event,node', function (S, MS, D, E, Node, TT) {
+    var $ = S.all;
+    var minShowTpl = '<div class="J_PPTItem ppt-item">\
                       <p class="title" style="margin: {{data.title.margin}}">\
                       {{#if data.title.text}}\
                       {{data.title.text}}\
@@ -294,26 +294,26 @@
         switch(combine){
             case key + '_next':
                 console.log('[control] next page');
-                _prev();
+                _next();
                 break;
             case key + '_prev':
                 console.log('[control] prev page');
-                _next();
+                _prev();
                 break;
             case key + '_zoom':
-                    console.log('[zoom] data:');
-                    console.log(data);
-                    if(data.data.x && data.data.y && data.data.zoom == 'in'){
-                        scaleItem({
-                            left: data.data.x.toFixed(2) * 100 + '%',
-                            top: data.data.y.toFixed(2) * 100 + '%'
-                        });
-                    }else if(data.data.zoom == 'out'){
-                        scaleItem({
-                            left: '100%',
-                            top: '100%'
-                        }, 1);
-                    }
+                console.log('[zoom] data:');
+                console.log(data);
+                if(data.data.x && data.data.y && data.data.zoom == 'in'){
+                    scaleItem({
+                        left: data.data.x.toFixed(2) * 100 + '%',
+                        top: data.data.y.toFixed(2) * 100 + '%'
+                    });
+                }else if(data.data.zoom == 'out'){
+                    scaleItem({
+                        left: '100%',
+                        top: '100%'
+                    }, 1);
+                }
                 break;
             case key + '_fullscreen':
                 if(data.fullscreen === true){
