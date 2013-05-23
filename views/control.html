@@ -55,7 +55,8 @@
                         window.socket.emit("send", {
                             key: window.key,
                             act: "pair",
-                            page: app.get('viewpath')
+                            page: app.get('viewpath'),
+                            fullscreen: true
                         });
 
                         window.addEventListener("orientationchange", setHeight );
@@ -141,6 +142,41 @@
                                 act: 'next',
                                 data: {}
                             });
+                        });
+
+                        var contentEl = D.get('#J_MSContent');
+                        var doubleTapTimer;
+                        var throttle;
+                        var zoom = 'out';
+                        E.on(contentEl, 'touchend', function(e){
+                            if(!D.parent(e.target, '#control')){
+                                var now = new Date().getTime();
+                                var lastTouch = D.data(this, 'lastTouch') || now + 1;
+                                var delta = now - lastTouch;
+                                doubleTapTimer && clearTimeout(doubleTapTimer);
+                                if(delta < 500 && delta > 0){
+                                    var x = e.changedTouches[0].pageX;
+                                    var y = e.changedTouches[0].pageY;
+                                    zoom = zoom == 'out' ? 'in' : 'out';
+                                    throttle && clearTimeout(throttle);
+                                    throttle = setTimeout(function(){
+                                        window.socket.emit('send', {
+                                            key: window.key,
+                                            act: 'zoom',
+                                            data: {
+                                                zoom: zoom,
+                                                x: x / D.viewportWidth(),
+                                                y: y / D.viewportHeight()
+                                            }
+                                        });
+                                    }, 100);
+                                }else{
+                                    doubleTapTimer = setTimeout(function(e){
+                                        clearTimeout(doubleTapTimer);
+                                    }, 500, [e]);
+                                }
+                                D.data(this, 'lastTouch', now);
+                            }
                         });
                     }else{}
 

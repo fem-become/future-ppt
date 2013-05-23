@@ -1,16 +1,16 @@
 <section class="content control">
-  <div class="showing-ppt style-rotate" id="J_ShowingPPT">
+    <div class="showing-ppt style-rotate" id="J_ShowingPPT">
 
-  <div id="viewStage">
-  <div id="cube1" class="cube" ><!-- 1526 -->
-    <div class="facefront fb">1</div>
-    <div class="faceback fb">2</div>
-    <div class="facetop tb">5</div>
-    <div class="facebottom tb">6</div>
-  </div>
-</div>
-<div class="msg" id="J_Msg" style="display: none;"></div>
-</div>
+        <div id="viewStage">
+            <div id="cube1" class="cube" ><!-- 1526 -->
+                <div class="facefront fb">1</div>
+                <div class="faceback fb">2</div>
+                <div class="facetop tb">5</div>
+                <div class="facebottom tb">6</div>
+            </div>
+        </div>
+        <div class="msg" id="J_Msg" style="display: none;"></div>
+    </div>
     <div id="J_ControlArea" class="control-ppt-area">
         <div id="J_EnterControlBtn" class="enter-control"></div>
         <div id="J_SavePPTBtn" class="save-ppt"></div>
@@ -42,241 +42,291 @@
                     </div>';
 
 
-        MS.startup(function (data) {
-            var app = this;
-            NS.toggleNav(mobile == 'true' ? 'setting' : 'back');
+    MS.startup(function (data) {
+        var app = this;
+        NS.toggleNav(mobile == 'true' ? 'setting' : 'back');
 
-            begin();
+        begin();
 
-            if(mobile == 'true'){
-                var controlTimer;
-                var $controlArea = $('#J_ControlArea');
-                $('#J_SettingBtn').on('click tap', function(e){
-                    $controlArea.show();
-                    controlTimer && clearTimeout(controlTimer);
-                    controlTimer = setTimeout(function(){
-                        $controlArea.slideDown(.5);
-                    }, 1500);
+        if(mobile == 'true'){
+            var controlTimer;
+            var $controlArea = $('#J_ControlArea');
+            $('#J_SettingBtn').on('click tap', function(e){
+                $controlArea.show();
+                controlTimer && clearTimeout(controlTimer);
+                controlTimer = setTimeout(function(){
+                    $controlArea.slideDown(.5);
+                }, 1500);
+            });
+            $('#J_EnterControlBtn').on('click tap', function(e){
+                $('#J_EnterPIN').show();
+            });
+            $('#J_EnterPINForm').on('submit', function(e){
+                e.preventDefault();
+                window.key = D.val('#J_EnterPINInput');
+                window.socket.emit("send", {
+                    key: window.key,
+                    act: "pair",
+                    page: app.get('viewpath')
                 });
-                $('#J_EnterControlBtn').on('click tap', function(e){
-                    $('#J_EnterPIN').show();
-                });
-                $('#J_EnterPINForm').on('submit', function(e){
-                    e.preventDefault();
-                    window.key = D.val('#J_EnterPINInput');
-                    window.socket.emit("send", {
-                        key: window.key,
-                        act: "pair",
-                        page: app.get('viewpath')
-                    });
-                    app.forward('control.html');
-                });
+                app.forward('control.html');
+            });
+        }
+
+        function setHeight(){
+            var height = D.viewportHeight() - D.height('#MS-nav');
+            var width = D.viewportWidth();
+            D.css('#cube1', {
+                'height': height
+            });
+            D.css(D.query('#cube1 .fb'), {
+                'height': height,
+                'width': width
+            });
+            D.css(D.query('#cube1 .tb'), {
+                'height': height,
+                'width': width
+            });
+            D.addStyleSheet('.facefront {-webkit-transform: translateZ(' + (height / 2).toFixed(0) + 'px)}' +
+                    '.faceback {-webkit-transform: rotateY(180deg) rotateZ(180deg) translateZ(' + (height / 2).toFixed(0) + 'px)}' +
+                    '.facetop {-webkit-transform: rotateX(90deg) translateZ(' + (height / 2).toFixed(0) + 'px)}' +
+                    '.facebottom {-webkit-transform: rotateX(-90deg) translateZ(' + (height / 2).toFixed(0) + 'px)}' +
+                    '#viewStage {-webkit-perspective: ' + (parseInt(height, 10) + parseInt((height / 2).toFixed(0), 10)) + 'px}');
+        }
+
+        // setHeight();
+
+        // window.addEventListener('resize', setHeight);
+        // window.addEventListener('orientationchange', setHeight);
+
+    });
+
+    MS.teardown(function () {
+        // 注册 teardown
+    });
+
+    MS.includeOnce(function () {
+        // 注册 includeOnce
+    });
+
+    var g_pptdata = [];
+    function begin(){
+        g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
+        cLen = g_pptdata.length;
+
+        // rotateTo(0, cLen)
+        renderPPT();
+
+        eventHanlde();
+    }
+
+
+    function eventHanlde(){
+        //光标移动 左、右
+        $(document).on('keyup', function(e){
+            if( e.keyCode == 37 || e.keyCode == 38){
+                _prev();
             }
+            else if( e.keyCode == 39 || e.keyCode == 40){
+                _next();
+            }
+        })
 
-        });
+        var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
+        $('#cube1').delegate(doubleTap,'.J_PPTItem', function(e){
+            var target = $(e.currentTarget);
+            var _x = e.offsetX / target.width() * 100 + '%', _y = e.offsetY / target.height() * 100 + '%';
+            scaleItem({
+                top: _x
+                ,left: _y
+            });
+        })
 
-        MS.teardown(function () {
-            // 注册 teardown
-        });
+        $('#cube1').on('swipe', function(e){
+            if( e.direction == 'up'){
+                _next();
+            }
+            else if(e.direction == 'down'){
+                _prev();
+            }
+        })
 
-        MS.includeOnce(function () {
-            // 注册 includeOnce
-        });
+        window.addEventListener("orientationchange", handleRotation );
+    }
 
-        var g_pptdata = [];
-        function begin(){
-            g_pptdata = S.JSON.parse( localStorage.getItem('pptData') );
-            cLen = g_pptdata.length;
-
-            // rotateTo(0, cLen)
-            renderPPT();
-
-            eventHanlde();
-        }
-
-
-        function eventHanlde(){
-            //光标移动 左、右
-            $(document).on('keyup', function(e){
-                if( e.keyCode == 37 || e.keyCode == 38){
-                    _prev();
-                }
-                else if( e.keyCode == 39 || e.keyCode == 40){
-                    _next();
-                }
-            })
-
-            var doubleTap = S.UA.iphone?('doubleTap'):('dblclick');
-            $('#cube1').delegate(doubleTap,'.J_PPTItem', function(e){
-                var target = $(e.currentTarget);
-                var _x = e.offsetX / target.width() * 100 + '%', _y = e.offsetY / target.height() * 100 + '%';
-                scaleItem({
-                  top: _x
-                  ,left: _y
-                });
-            })
-
-            $('#cube1').on('swipe', function(e){
-                if( e.direction == 'up'){
-                    _next();
-                }
-                else if(e.direction == 'down'){
-                    _prev();
-                }
-            })
-
-             window.addEventListener("orientationchange", handleRotation );
-        }
-
-        var curPPTItem = null;
-        //双击放大 缩小
-        function scaleItem(origin, scaleVal){
-          if( !curPPTItem ){
+    var curPPTItem = null;
+    //双击放大 缩小
+    function scaleItem(origin, scaleVal){
+        if( !curPPTItem ){
             curPPTItem = $('#cube1').one('.J_PPTItem');
-          }
-          if( !scaleVal ){
+        }
+        if( !scaleVal ){
             scaleVal = 2;
-          }
-          if(curPPTItem.css('-webkit-transform') == 'none'){
-              
-
-              curPPTItem.css('-webkit-transform-origin', origin.top + ' ' + origin.left);
-              curPPTItem.css('-webkit-transform', 'scale(' + scaleVal + ')');
-          }
-          else{
-              curPPTItem.css('-webkit-transform', '');
-          }
         }
+        if(curPPTItem.css('-webkit-transform') == 'none'){
 
-        //渲染ppt
-        function renderPPT(){
-            KISSY.use('template', function(S, TT){
-                S.each(g_pptdata, function(item, idx){
-                    $('#J_PPPTBox').append( $( TT(minShowTpl).render({
-                        data: item
-                        ,index: idx
-                        // ,left: idx * 950
-                    }) ) )
-                })
 
-                $('#J_PPPTBox').css('width', g_pptdata.length * 950 + 'px');
+            curPPTItem.css('-webkit-transform-origin', origin.top + ' ' + origin.left);
+            curPPTItem.css('-webkit-transform', 'scale(' + scaleVal + ')');
+        }
+        else{
+            curPPTItem.css('-webkit-transform', '');
+        }
+    }
+
+    //渲染ppt
+    function renderPPT(){
+        KISSY.use('template', function(S, TT){
+            S.each(g_pptdata, function(item, idx){
+                $('#J_PPPTBox').append( $( TT(minShowTpl).render({
+                    data: item
+                    ,index: idx
+                    // ,left: idx * 950
+                }) ) )
             })
-        }
+
+            $('#J_PPPTBox').css('width', g_pptdata.length * 950 + 'px');
+        })
+    }
 
     var cLeft = 0, cIdx = 0, cLen = 0;
     var playStyle = 'rotate';
 
     function _prev(){
-      if( cIdx == 0) {
-        // alert('已经到达第一页')
-        $('#J_Msg').html('已经到达第一页').show();
-        setTimeout(function(){
-          $('#J_Msg').hide();
-        },500);
-        return false;
-      }
-      var items = $('#J_PPPTBox').children();
-      --cIdx;
-      switch(playStyle){
-        case 'rotate':{
-          // rotateTo(cIdx,cLen,'prev');
-          rotate2(cIdx, 'prev');
+        if( cIdx == 0) {
+            // alert('已经到达第一页')
+            $('#J_Msg').html('已经到达第一页').show();
+            setTimeout(function(){
+                $('#J_Msg').hide();
+            },500);
+            return false;
         }
-      }
+        var items = $('#J_PPPTBox').children();
+        --cIdx;
+        switch(playStyle){
+            case 'rotate':{
+                // rotateTo(cIdx,cLen,'prev');
+                rotate2(cIdx, 'prev');
+            }
+        }
     }
     function _next(){
-      if( cIdx == cLen-1){
-        // alert('已经到达最后一页');
-        $('#J_Msg').html('已经到达最后一页').show();
-        setTimeout(function(){
-          $('#J_Msg').hide();
-        },500);
-        return false;
-      } 
-      var items = $('#J_PPPTBox').children();
-      ++cIdx;
-      switch(playStyle){
-        case 'rotate':{
-          // rotateTo(cIdx,cLen,'next');
-          rotate2(cIdx, 'next');
+        if( cIdx == cLen-1){
+            // alert('已经到达最后一页');
+            $('#J_Msg').html('已经到达最后一页').show();
+            setTimeout(function(){
+                $('#J_Msg').hide();
+            },500);
+            return false;
         }
-      }
+        var items = $('#J_PPPTBox').children();
+        ++cIdx;
+        switch(playStyle){
+            case 'rotate':{
+                // rotateTo(cIdx,cLen,'next');
+                rotate2(cIdx, 'next');
+            }
+        }
     }
 
     function rotate2(cIdx, type){
-      // debugger
-      renderPPTToCube(cIdx);
-      // if( type == 'prev'){
+        // debugger
+        renderPPTToCube(cIdx);
+        // if( type == 'prev'){
         $('#cube1').css('-webkit-transform', 'rotateX(' + 90 * cIdx + 'deg)')
-      // }
-      // else {
+        // }
+        // else {
 
-      // }
+        // }
     }
     renderPPTToCube(0);
     function renderPPTToCube(cIdx){
-      KISSY.use('template', function(S, TT){
-        var items = $('#cube1').children();
-        items = [items.item(0), items.item(3), items.item(1), items.item(2)];
+        KISSY.use('template', function(S, TT){
+            var items = $('#cube1').children();
+            items = [items.item(0), items.item(3), items.item(1), items.item(2)];
 
-        // items
-        items[cIdx%4].html( TT(minShowTpl).render({
-          data: g_pptdata[cIdx]
-          ,index: cIdx
-        }) )
-        curPPTItem = items[cIdx%4].one('.J_PPTItem');
-      });
+            // items
+            items[cIdx%4].html( TT(minShowTpl).render({
+                data: g_pptdata[cIdx]
+                ,index: cIdx
+            }) )
+            curPPTItem = items[cIdx%4].one('.J_PPTItem');
+        });
     }
 
     //特殊效果：旋转
     function rotateTo(cIdx, len, type){
-      // debugger
-      var items = $('#J_PPPTBox').children();
-      var prev = (cIdx-1>=0) && items[cIdx-1] //item 方法不可用
-      ,prev2 = (cIdx-2>=0) && items[cIdx-2]
-      ,cur = items[cIdx]
-      ,next = (cIdx+1<len) && items[cIdx+1]
-      ,next2 = (cIdx+2<len) && items[cIdx+2]
-      ;
+        // debugger
+        var items = $('#J_PPPTBox').children();
+        var prev = (cIdx-1>=0) && items[cIdx-1] //item 方法不可用
+                ,prev2 = (cIdx-2>=0) && items[cIdx-2]
+                ,cur = items[cIdx]
+                ,next = (cIdx+1<len) && items[cIdx+1]
+                ,next2 = (cIdx+2<len) && items[cIdx+2]
+                ;
 
-      if(type == 'prev'){
-        prev&&(prev.className = 'cur transform-origin-top-right');
-        cur.className = 'next transform-origin-top-left';
-      }
-      else{
-        cur.className = 'prev transform-origin-top-right';
-        next&&(next.className = 'cur transform-origin-top-left');
-      }
+        if(type == 'prev'){
+            prev&&(prev.className = 'cur transform-origin-top-right');
+            cur.className = 'next transform-origin-top-left';
+        }
+        else{
+            cur.className = 'prev transform-origin-top-right';
+            next&&(next.className = 'cur transform-origin-top-left');
+        }
     }
-    
+
     setScale();
     function setScale(){
-      var clientWidth = document.body.clientWidth;
-      var clientHeight = document.body.clientHeight;
+        var clientWidth = document.body.clientWidth;
+        var clientHeight = document.body.clientHeight;
 
-      if( clientWidth < 950){
-        $('#J_ShowingPPT').css('-webkit-transform', 'scale(' + clientWidth/950 + ')');
-        $('#J_ShowingPPT').height( clientHeight - 52 ).css('overflow', 'hidden');
-      }
+        if( clientWidth < 950){
+            $('#J_ShowingPPT').css('-webkit-transform', 'scale(' + clientWidth/950 + ')');
+            $('#J_ShowingPPT').height( clientHeight - 52 ).css('overflow', 'hidden');
+        }
     }
-    
+
     function handleRotation(){
-      setScale();
+        setScale();
     }
-	window.socket.on('get_response', function (data) {
-		var combine = data.key + '_' + data.act;
-		switch(combine){
-			case key + '_next':
-				console.log('[control] next page');
-				_prev();
-				break;
-			case key + '_prev':
-				console.log('[control] prev page');
-				_next();
-				break;
-		}
-	});
-	//        window.prevPPT = _prev;
-	//        window.nextPPT = _next;
+    window.socket.on('get_response', function (data) {
+        var combine = data.key + '_' + data.act;
+        switch(combine){
+            case key + '_next':
+                console.log('[control] next page');
+                _prev();
+                break;
+            case key + '_prev':
+                console.log('[control] prev page');
+                _next();
+                break;
+            case key + '_zoom':
+                    console.log('[zoom] data:');
+                    console.log(data);
+                    if(data.data.x && data.data.y && data.data.zoom == 'in'){
+                        scaleItem({
+                            left: data.data.x.toFixed(2) * 100 + '%',
+                            top: data.data.y.toFixed(2) * 100 + '%'
+                        });
+                    }else if(data.data.zoom == 'out'){
+                        scaleItem({
+                            left: '100%',
+                            top: '100%'
+                        }, 1);
+                    }
+                break;
+            case key + '_fullscreen':
+                if(data.fullscreen === true){
+                    console.log('start to enter full screen mode.');
+                    fullScreenApi.requestFullScreen(document.getElementById('J_MSContent'));
+                }else{
+                    console.log('cancel full screen mode.');
+                    fullScreenApi.cancelFullScreen(document.getElementById('J_MSContent'));
+                }
+                break;
+        }
+    });
+    //        window.prevPPT = _prev;
+    //        window.nextPPT = _next;
 });
 </script>
