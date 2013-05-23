@@ -340,3 +340,9 @@ body {
 /*@media only screen and (max-width: 768px) {*/
 
 /*}*/
+
+.fb img,
+.tb img {
+    max-height: 90%;
+    max-width: 90%;
+}

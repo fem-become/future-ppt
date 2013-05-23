@@ -83,7 +83,7 @@
         MS.startup(function (data) {
             var app = this;
             NS.toggleNav('back');
-            D.attr('#J_BackBtn', 'href', 'add_ppt.html');
+//            D.attr('#J_BackBtn', 'href', 'add_ppt.html');
             begin();
 
             $('#J_Tdc').on('click', function(e){
@@ -111,7 +111,7 @@
         });
 
 
-var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo3.jpg'>"}}];
+        var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo0.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"主标题二"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo1.jpg'>"}},{"title":{"margin":"4% 10% 0","text":"333333333"},"desc":{"margin":"2% 10% 0","text":"<img src='./assets/images/demo3.jpg'>"}}];
 
         function begin(){
             //读本地存储
@@ -171,6 +171,7 @@ var g_pptdata = [{"title":{"margin":"4% 10% 0","text":"主标题一"},"desc":{"m
                 //预览
                 $('#J_PreviewBtn').on(clickEventName, function(){
                     previewPPT();
+                    fullScreenApi.requestFullScreen(document.getElementById('J_MSContent'));
                 })
 
                 //-----------------------------------------------actions
